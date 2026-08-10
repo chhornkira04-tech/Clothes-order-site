@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Clothes Order</title>
 
     <style>
@@ -55,6 +57,11 @@
             cursor: pointer;
         }
 
+        button:disabled {
+            background: #888;
+            cursor: not-allowed;
+        }
+
         #message {
             text-align: center;
             margin-top: 15px;
@@ -72,6 +79,7 @@
     <form id="orderForm">
 
         <label for="name">Full Name</label>
+
         <input
             type="text"
             id="name"
@@ -79,7 +87,9 @@
             required
         >
 
+
         <label for="phone">Phone Number</label>
+
         <input
             type="tel"
             id="phone"
@@ -87,21 +97,28 @@
             required
         >
 
+
         <label for="address">Delivery Address</label>
+
         <textarea
             id="address"
             placeholder="Enter your delivery address"
             required
         ></textarea>
 
+
         <label for="order">Your Order</label>
+
         <textarea
             id="order"
             placeholder="Example: 2 black T-shirts, size M"
             required
         ></textarea>
 
-        <button type="submit">Send Order</button>
+
+        <button type="submit" id="submitButton">
+            Send Order
+        </button>
 
     </form>
 
@@ -109,39 +126,113 @@
 
 </div>
 
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-document.getElementById("orderForm").addEventListener("submit", function(event) {
+    // Your Supabase project
+    const SUPABASE_URL =
+        "https://ceuuxzxcvprvqfgvylnc.supabase.co";
 
-    event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const order = document.getElementById("order").value.trim();
+    // IMPORTANT:
+    // Use the SAME Publishable key that worked
+    // on your admin page.
+    const SUPABASE_KEY =
+        "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
 
-    const newOrder = {
-        name: name,
-        phone: phone,
-        address: address,
-        order: order,
-        date: new Date().toLocaleString()
-    };
 
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
-    orders.push(newOrder);
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+    // Order form
+    document
+        .getElementById("orderForm")
+        .addEventListener("submit", async function(event) {
 
-    document.getElementById("message").textContent =
-        "Order sent successfully!";
+            event.preventDefault();
 
-    document.getElementById("orderForm").reset();
 
-});
+            const submitButton =
+                document.getElementById("submitButton");
+
+            const message =
+                document.getElementById("message");
+
+
+            // Disable button while sending
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+
+
+            // Get customer's information
+            const name =
+                document.getElementById("name").value.trim();
+
+            const phone =
+                document.getElementById("phone").value.trim();
+
+            const address =
+                document.getElementById("address").value.trim();
+
+            const order =
+                document.getElementById("order").value.trim();
+
+
+            // Send order to Supabase
+            const { data, error } =
+                await supabaseClient
+                    .from("orders")
+                    .insert([
+                        {
+                            name: name,
+                            phone: phone,
+                            address: address,
+                            item: order,
+                            status: "New"
+                        }
+                    ]);
+
+
+            // Error
+            if (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Order failed: " + error.message;
+
+                submitButton.disabled = false;
+                submitButton.textContent = "Send Order";
+
+                return;
+            }
+
+
+            // Success
+            message.textContent =
+                "Order sent successfully!";
+
+
+            // Clear form
+            document
+                .getElementById("orderForm")
+                .reset();
+
+
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Order";
+
+        });
 
 </script>
 
 </body>
 </html>
+```
