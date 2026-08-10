@@ -18,7 +18,6 @@
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         h1 {
@@ -40,7 +39,7 @@
         }
 
         textarea {
-            height: 120px;
+            height: 100px;
             resize: vertical;
         }
 
@@ -54,10 +53,6 @@
             color: white;
             font-size: 16px;
             cursor: pointer;
-        }
-
-        button:hover {
-            background: #444;
         }
 
         #message {
@@ -76,17 +71,32 @@
 
     <form id="orderForm">
 
-        <label for="name">Your Name</label>
-        <input 
-            type="text" 
-            id="name" 
-            placeholder="Enter your name"
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
             required
         >
 
+        <label for="phone">Phone Number</label>
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Enter your phone number"
+            required
+        >
+
+        <label for="address">Delivery Address</label>
+        <textarea
+            id="address"
+            placeholder="Enter your delivery address"
+            required
+        ></textarea>
+
         <label for="order">Your Order</label>
-        <textarea 
-            id="order" 
+        <textarea
+            id="order"
             placeholder="Example: 2 black T-shirts, size M"
             required
         ></textarea>
@@ -106,10 +116,14 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
     event.preventDefault();
 
     const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
     const order = document.getElementById("order").value.trim();
 
     const newOrder = {
         name: name,
+        phone: phone,
+        address: address,
         order: order,
         date: new Date().toLocaleString()
     };
@@ -120,7 +134,8 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
 
     localStorage.setItem("orders", JSON.stringify(orders));
 
-    document.getElementById("message").textContent = "Order sent successfully!";
+    document.getElementById("message").textContent =
+        "Order sent successfully!";
 
     document.getElementById("orderForm").reset();
 
