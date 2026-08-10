@@ -1,43 +1,46 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Login</title>
+    <title>Admin Panel</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f4f4;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 30px;
+            margin: 0;
         }
 
-        .box {
-            width: 90%;
-            max-width: 400px;
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .login-box,
+        .admin-box {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .login-box {
+            max-width: 400px;
+            margin: 50px auto;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 25px;
         }
 
         input {
             width: 100%;
-            padding: 13px;
+            padding: 12px;
+            box-sizing: border-box;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 6px;
@@ -45,13 +48,12 @@
         }
 
         button {
-            width: 100%;
-            padding: 13px;
+            padding: 12px 18px;
             border: none;
             border-radius: 6px;
             background: #222;
             color: white;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
         }
 
@@ -59,27 +61,77 @@
             background: #444;
         }
 
+        .logout {
+            background: #c62828;
+            margin-bottom: 20px;
+        }
+
+        .logout:hover {
+            background: #a51f1f;
+        }
+
         #message {
             text-align: center;
             margin-top: 15px;
+            font-weight: bold;
         }
 
-        .admin-panel {
-            display: none;
+        .orders {
+            overflow-x: auto;
         }
 
-        .logout {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #222;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .error {
+            color: #c62828;
+        }
+
+        .success {
+            color: #2e7d32;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
         }
     </style>
 </head>
 
 <body>
 
-<div class="box">
-
     <!-- LOGIN -->
-    <div id="loginSection">
+    <div class="login-box" id="loginSection">
 
         <h1>Admin Login</h1>
 
@@ -105,133 +157,304 @@
 
         </form>
 
-        <p id="message"></p>
+        <div id="loginMessage"></div>
 
     </div>
 
 
     <!-- ADMIN PANEL -->
-    <div id="adminPanel" class="admin-panel">
+    <div class="container" id="adminSection" style="display: none;">
 
-        <h1>Admin Panel</h1>
+        <div class="admin-box">
 
-        <p>You are logged in.</p>
+            <h1>Admin Panel</h1>
 
-        <p id="adminEmail"></p>
+            <p>
+                Logged in as:
+                <strong id="adminEmail"></strong>
+            </p>
 
-        <button class="logout" id="logoutButton">
-            Logout
-        </button>
+            <button class="logout" id="logoutButton">
+                Logout
+            </button>
+
+            <h2>Customer Orders</h2>
+
+            <div id="ordersMessage" class="loading">
+                Loading orders...
+            </div>
+
+            <div class="orders">
+
+                <table id="ordersTable" style="display: none;">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Order</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="ordersBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 
-</div>
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://ceuuxzxcvprvqfgvylnc.supabase.co";
 
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        // IMPORTANT:
+        // Put the SAME Publishable key here
+        // that you used when your login started working.
 
-<script>
-
-    // YOUR SUPABASE PROJECT
-    const SUPABASE_URL =
-        "https://ceuuxzxcvprvqfgvylnc.supabase.co";
+        const SUPABASE_KEY =
+            "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
 
 
-    // IMPORTANT:
-    // Paste your SUPABASE PUBLISHABLE KEY here.
-    //
-    // It should normally start with:
-    // sb_publishable_
-    //
-    // NEVER use the secret/service_role key.
-
-    const SUPABASE_KEY =
-        "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
-    // Connect to Supabase
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+        // =========================
+        // LOGIN
+        // =========================
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const password =
+                    document.getElementById("password").value;
+
+                const message =
+                    document.getElementById("loginMessage");
 
 
-    // LOGIN
-    document
-        .getElementById("loginForm")
-        .addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-            const email =
-                document.getElementById("email").value.trim();
-
-            const password =
-                document.getElementById("password").value;
-
-            const message =
-                document.getElementById("message");
+                message.textContent = "Logging in...";
+                message.className = "";
 
 
-            message.textContent = "Logging in...";
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+
+                if (error) {
+
+                    message.textContent =
+                        "Login failed: " + error.message;
+
+                    message.className = "error";
+
+                    return;
+                }
+
+
+                // Show admin panel
+                document
+                    .getElementById("loginSection")
+                    .style.display = "none";
+
+                document
+                    .getElementById("adminSection")
+                    .style.display = "block";
+
+
+                document
+                    .getElementById("adminEmail")
+                    .textContent = email;
+
+
+                // Load customer orders
+                loadOrders();
+
+            });
+
+
+        // =========================
+        // LOAD ORDERS
+        // =========================
+
+        async function loadOrders() {
+
+            const ordersMessage =
+                document.getElementById("ordersMessage");
+
+            const ordersTable =
+                document.getElementById("ordersTable");
+
+            const ordersBody =
+                document.getElementById("ordersBody");
+
+
+            ordersMessage.textContent =
+                "Loading orders...";
+
+            ordersMessage.className = "loading";
+
+            ordersTable.style.display = "none";
 
 
             const { data, error } =
-                await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
+                await supabaseClient
+                    .from("orders")
+                    .select("*")
+                    .order("created_at", {
+                        ascending: false
+                    });
 
 
             if (error) {
 
-                message.textContent =
-                    "Login failed: " + error.message;
+                console.error(error);
+
+                ordersMessage.textContent =
+                    "Could not load orders: " +
+                    error.message;
+
+                ordersMessage.className = "error";
 
                 return;
             }
 
 
-            // Hide login
-            document.getElementById("loginSection")
-                .style.display = "none";
+            // No orders
+            if (!data || data.length === 0) {
+
+                ordersMessage.textContent =
+                    "No orders yet.";
+
+                ordersMessage.className =
+                    "no-orders";
+
+                return;
+            }
 
 
-            // Show admin
-            document.getElementById("adminPanel")
-                .style.display = "block";
+            // Clear old rows
+            ordersBody.innerHTML = "";
 
 
-            document.getElementById("adminEmail")
-                .textContent = "Logged in as: " + email;
+            // Add orders
+            data.forEach(function(order) {
 
-        });
+                const row =
+                    document.createElement("tr");
 
 
-    // LOGOUT
-    document
-        .getElementById("logoutButton")
-        .addEventListener("click", async function() {
+                const date =
+                    order.created_at
+                        ? new Date(order.created_at)
+                            .toLocaleString()
+                        : "";
 
-            await supabaseClient.auth.signOut();
 
-            document.getElementById("adminPanel")
-                .style.display = "none";
+                row.innerHTML = `
 
-            document.getElementById("loginSection")
-                .style.display = "block";
+                    <td>${escapeHTML(order.name || "")}</td>
 
-            document.getElementById("loginForm")
-                .reset();
+                    <td>${escapeHTML(order.phone || "")}</td>
 
-            document.getElementById("message")
-                .textContent = "";
+                    <td>${escapeHTML(order.address || "")}</td>
 
-        });
+                    <td>${escapeHTML(order.item || "")}</td>
 
-</script>
+                    <td class="status">
+                        ${escapeHTML(order.status || "New")}
+                    </td>
+
+                    <td>${escapeHTML(date)}</td>
+
+                `;
+
+
+                ordersBody.appendChild(row);
+
+            });
+
+
+            ordersMessage.textContent =
+                data.length + " order(s) found.";
+
+            ordersMessage.className = "success";
+
+
+            ordersTable.style.display = "table";
+
+        }
+
+
+        // =========================
+        // SECURITY HELPER
+        // =========================
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = value;
+
+            return div.innerHTML;
+        }
+
+
+        // =========================
+        // LOGOUT
+        // =========================
+
+        document
+            .getElementById("logoutButton")
+            .addEventListener("click", async function() {
+
+                await supabaseClient.auth.signOut();
+
+                document
+                    .getElementById("adminSection")
+                    .style.display = "none";
+
+                document
+                    .getElementById("loginSection")
+                    .style.display = "block";
+
+                document
+                    .getElementById("loginForm")
+                    .reset();
+
+                document
+                    .getElementById("loginMessage")
+                    .textContent = "";
+
+            });
+
+    </script>
 
 </body>
 </html>
+```
