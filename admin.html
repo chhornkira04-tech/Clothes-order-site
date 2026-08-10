@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .order {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 15px;
+      background: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Admin Panel</h1>
+  <div id="orders"></div>
+
+  <button onclick="clearOrders()">Clear All Orders</button>
+
+  <script>
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const container = document.getElementById("orders");
+
+      if (orders.length === 0) {
+        container.innerHTML = "<p>No orders yet.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+
+      orders.forEach(o => {
+        container.innerHTML += `
+          <div class="order">
+            <strong>Customer:</strong> ${o.name}<br>
+            <strong>Order:</strong> ${o.order}
+          </div>
+        `;
+      });
+    }
+
+    function clearOrders() {
+      localStorage.removeItem("orders");
+      loadOrders();
+    }
+
+    loadOrders();
+  </script>
+
+</body>
+</html>
