@@ -1,62 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clothes Order</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Order</title>
 
-    .box {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 320px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 30px;
+        }
 
-    h2 {
-      text-align: center;
-    }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      box-sizing: border-box;
-    }
+        h1 {
+            text-align: center;
+        }
 
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
 
-    button:hover {
-      background: #0056b3;
-    }
-  </style>
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h2>Order Clothes</h2>
+<div class="container">
 
-    <input type="text" placeholder="Your Name">
+    <h1>Clothes Order</h1>
 
-    <textarea rows="4" placeholder="Example: 2 T-shirts, 1 Hoodie"></textarea>
+    <form id="orderForm">
 
-    <button>Send Order</button>
-  </div>
+        <label for="name">Your Name</label>
+        <input 
+            type="text" 
+            id="name" 
+            placeholder="Enter your name"
+            required
+        >
+
+        <label for="order">Your Order</label>
+        <textarea 
+            id="order" 
+            placeholder="Example: 2 black T-shirts, size M"
+            required
+        ></textarea>
+
+        <button type="submit">Send Order</button>
+
+    </form>
+
+    <div id="message"></div>
+
+</div>
+
+<script>
+
+document.getElementById("orderForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const order = document.getElementById("order").value.trim();
+
+    const newOrder = {
+        name: name,
+        order: order,
+        date: new Date().toLocaleString()
+    };
+
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    orders.push(newOrder);
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    document.getElementById("message").textContent = "Order sent successfully!";
+
+    document.getElementById("orderForm").reset();
+
+});
+
+</script>
 
 </body>
 </html>
