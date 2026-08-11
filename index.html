@@ -4,1204 +4,296 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>HYY Clothing</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f7f7f7;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
       color: #111;
     }
 
     header {
       background: #111;
       color: white;
-      padding: 20px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
-
-    .cart-button {
-      background: white;
-      color: #111;
-      border: none;
-      padding: 11px 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .hero {
-      background: #111;
-      color: white;
+      padding: 20px;
       text-align: center;
-      padding: 75px 20px;
-    }
-
-    .hero h1 {
-      font-size: clamp(40px, 8vw, 75px);
-      margin-bottom: 15px;
-      letter-spacing: 4px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #ccc;
+      font-size: 28px;
+      font-weight: bold;
     }
 
     .container {
       width: 90%;
-      max-width: 1200px;
-      margin: 50px auto;
-    }
-
-    .section-title {
-      font-size: 30px;
-      margin-bottom: 25px;
+      max-width: 1100px;
+      margin: 30px auto;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
     }
 
     .product {
       background: white;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
-
-    .product-image {
-      height: 280px;
-      background: #e9e9e9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 90px;
-    }
-
-    .product-info {
       padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
-    .product-info h3 {
-      font-size: 21px;
-      margin-bottom: 8px;
+    .product h3 {
+      margin-top: 0;
     }
 
     .price {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin: 10px 0;
     }
 
-    .options {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 15px;
+    select, input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
 
-    select,
-    input,
-    textarea {
+    button {
       width: 100%;
       padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 7px;
-      background: white;
-      font-size: 15px;
-    }
-
-    .quantity {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 12px 0;
-    }
-
-    .quantity button {
-      width: 38px;
-      height: 38px;
-      border: 1px solid #ccc;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-    }
-
-    .quantity span {
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .add-cart {
-      width: 100%;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
       background: #111;
       color: white;
-      border: none;
-      padding: 13px;
-      border-radius: 7px;
       cursor: pointer;
       font-size: 15px;
       font-weight: bold;
     }
 
-    .add-cart:hover,
-    .send-order:hover {
+    button:hover {
       background: #333;
     }
 
-    .cart-section,
-    .checkout {
+    .cart, .checkout {
       background: white;
-      border-radius: 14px;
-      padding: 30px;
-      margin-top: 50px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid #eee;
-      padding: 15px 0;
-      gap: 15px;
-    }
-
-    .cart-item-info {
-      flex: 1;
-      line-height: 1.6;
-    }
-
-    .remove {
-      background: #eee;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
+      padding: 10px 0;
     }
 
     .total {
       text-align: right;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
-      margin-top: 20px;
-    }
-
-    .checkout h2 {
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .send-order {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #111;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     #message {
+      margin-top: 15px;
       text-align: center;
-      margin-top: 20px;
       font-weight: bold;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      margin-top: 70px;
-    }
-
-    @media (max-width: 900px) {
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 55px 15px;
-      }
-
-      .container {
-        width: 94%;
-      }
-
-      .cart-section,
-      .checkout {
-        padding: 20px;
-      }
-
-      .cart-item {
-        align-items: flex-start;
-        flex-direction: column;
-      }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">HYY CLOTHING</div>
+<header>HYY CLOTHING</header>
 
-  <button class="cart-button" onclick="scrollToCart()">
-    🛒 Cart (<span id="cartCount">0</span>)
-  </button>
-</header>
-
-<section class="hero">
-  <h1>HYY CLOTHING</h1>
-  <p>Simple. Modern. Your style.</p>
-</section>
-
-<main class="container">
-
-  <h2 class="section-title">Featured Products</h2>
+<div class="container">
 
   <div class="products">
 
-    <!-- T-SHIRTS -->
     <div class="product">
-      <div class="product-image">👕</div>
-
-      <div class="product-info">
-        <h3>T-Shirts</h3>
-        <div class="price">$12</div>
-
-        <div class="options">
-          <select id="color-tshirt">
-            <option>Black</option>
-            <option>White</option>
-            <option>Gray</option>
-            <option>Blue</option>
-          </select>
-
-          <select id="size-tshirt">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('tshirt', -1)">−</button>
-          <span id="qty-tshirt">1</span>
-          <button onclick="changeQty('tshirt', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('T-Shirts', 12, 'tshirt')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>T-Shirts</h3>
+      <div class="price">$12</div>
+      <button onclick="addToCart('T-Shirts', 12)">Add to Cart</button>
     </div>
 
-
-    <!-- HOODIES -->
     <div class="product">
-      <div class="product-image">🧥</div>
-
-      <div class="product-info">
-        <h3>Hoodies</h3>
-        <div class="price">$30</div>
-
-        <div class="options">
-          <select id="color-hoodie">
-            <option>Black</option>
-            <option>White</option>
-            <option>Gray</option>
-            <option>Blue</option>
-          </select>
-
-          <select id="size-hoodie">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('hoodie', -1)">−</button>
-          <span id="qty-hoodie">1</span>
-          <button onclick="changeQty('hoodie', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('Hoodies', 30, 'hoodie')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>Hoodies</h3>
+      <div class="price">$30</div>
+      <button onclick="addToCart('Hoodies', 30)">Add to Cart</button>
     </div>
 
-
-    <!-- POLO SHIRTS -->
     <div class="product">
-      <div class="product-image">👔</div>
-
-      <div class="product-info">
-        <h3>Polo Shirts</h3>
-        <div class="price">$18</div>
-
-        <div class="options">
-          <select id="color-polo">
-            <option>Black</option>
-            <option>White</option>
-            <option>Gray</option>
-            <option>Blue</option>
-          </select>
-
-          <select id="size-polo">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('polo', -1)">−</button>
-          <span id="qty-polo">1</span>
-          <button onclick="changeQty('polo', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('Polo Shirts', 18, 'polo')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>Polo Shirts</h3>
+      <div class="price">$18</div>
+      <button onclick="addToCart('Polo Shirts', 18)">Add to Cart</button>
     </div>
 
-
-    <!-- JEANS -->
     <div class="product">
-      <div class="product-image">👖</div>
-
-      <div class="product-info">
-        <h3>Jeans</h3>
-        <div class="price">$28</div>
-
-        <div class="options">
-          <select id="color-jeans">
-            <option>Blue</option>
-            <option>Black</option>
-            <option>Gray</option>
-          </select>
-
-          <select id="size-jeans">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('jeans', -1)">−</button>
-          <span id="qty-jeans">1</span>
-          <button onclick="changeQty('jeans', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('Jeans', 28, 'jeans')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>Jeans</h3>
+      <div class="price">$28</div>
+      <button onclick="addToCart('Jeans', 28)">Add to Cart</button>
     </div>
 
-
-    <!-- CARGO PANTS -->
     <div class="product">
-      <div class="product-image">🩳</div>
-
-      <div class="product-info">
-        <h3>Cargo Pants</h3>
-        <div class="price">$32</div>
-
-        <div class="options">
-          <select id="color-cargo">
-            <option>Black</option>
-            <option>Green</option>
-            <option>Gray</option>
-            <option>Beige</option>
-          </select>
-
-          <select id="size-cargo">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('cargo', -1)">−</button>
-          <span id="qty-cargo">1</span>
-          <button onclick="changeQty('cargo', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('Cargo Pants', 32, 'cargo')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>Cargo Pants</h3>
+      <div class="price">$32</div>
+      <button onclick="addToCart('Cargo Pants', 32)">Add to Cart</button>
     </div>
 
-
-    <!-- SHORTS -->
     <div class="product">
-      <div class="product-image">🩳</div>
-
-      <div class="product-info">
-        <h3>Shorts</h3>
-        <div class="price">$16</div>
-
-        <div class="options">
-          <select id="color-shorts">
-            <option>Black</option>
-            <option>White</option>
-            <option>Gray</option>
-            <option>Blue</option>
-          </select>
-
-          <select id="size-shorts">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-          </select>
-        </div>
-
-        <div class="quantity">
-          <button onclick="changeQty('shorts', -1)">−</button>
-          <span id="qty-shorts">1</span>
-          <button onclick="changeQty('shorts', 1)">+</button>
-        </div>
-
-        <button
-          class="add-cart"
-          onclick="addToCart('Shorts', 16, 'shorts')">
-          Add to Cart
-        </button>
-      </div>
+      <h3>Shorts</h3>
+      <div class="price">$16</div>
+      <button onclick="addToCart('Shorts', 16)">Add to Cart</button>
     </div>
 
   </div>
 
 
-  <!-- CART -->
-
-  <section class="cart-section" id="cartSection">
-
-    <h2>Your Cart</h2>
-
-    <div id="cartItems">
-      <p>Your cart is empty.</p>
-    </div>
-
-    <div class="total">
-      Total: $<span id="cartTotal">0.00</span>
-    </div>
-
-  </section>
+  <div class="cart">
+    <h2>🛒 Cart</h2>
+    <div id="cartItems">Cart is empty.</div>
+    <div class="total">Total: $<span id="cartTotal">0.00</span></div>
+  </div>
 
 
-  <!-- CHECKOUT -->
-
-  <section class="checkout">
-
+  <div class="checkout">
     <h2>Checkout</h2>
 
-    <div class="form-group">
-      <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="tel" id="phone" placeholder="Phone Number">
+    <textarea id="address" rows="4" placeholder="Delivery Address"></textarea>
 
-      <input
-        type="text"
-        id="name"
-        placeholder="Enter your full name"
-        required>
-    </div>
-
-
-    <div class="form-group">
-      <label for="phone">Phone Number</label>
-
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Enter your phone number"
-        required>
-    </div>
-
-
-    <div class="form-group">
-      <label for="address">Delivery Address</label>
-
-      <textarea
-        id="address"
-        rows="4"
-        placeholder="Enter your delivery address"
-        required></textarea>
-    </div>
-
-
-    <button
-      class="send-order"
-      onclick="sendOrder()">
-
-      Send Order
-
-    </button>
+    <button onclick="sendOrder()">Send Order</button>
 
     <div id="message"></div>
+  </div>
 
-  </section>
-
-</main>
-
-
-<footer>
-  © 2026 HYY Clothing. All rights reserved.
-</footer>
+</div>
 
 
 <script>
+  // ========================
+  // SUPABASE
+  // ========================
 
-  /*
-   ============================================================
-   SUPABASE
-   ============================================================
-  */
+  const SUPABASE_URL = "https://ceuuxzxcvprvqfgvylnc.supabase.co";
 
-  const SUPABASE_URL =
-    "https://ceuuxzxcvprvqfgvylnc.supabase.co";
-
-  /*
-    IMPORTANT:
-    Paste your existing Supabase publishable/anon key here.
-    Do NOT put your Telegram bot token here.
-  */
-
-  const SUPABASE_KEY =
-    "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
+  // ⬇️ PASTE YOUR SUPABASE ANON KEY HERE
+  const SUPABASE_KEY = "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
 
 
-  /*
-   ============================================================
-   CART
-   ============================================================
-  */
+  // ========================
+  // CART
+  // ========================
 
   let cart = [];
 
-
-  const quantities = {
-    tshirt: 1,
-    hoodie: 1,
-    polo: 1,
-    jeans: 1,
-    cargo: 1,
-    shorts: 1
-  };
-
-
-  function changeQty(productId, amount) {
-
-    quantities[productId] += amount;
-
-    if (quantities[productId] < 1) {
-      quantities[productId] = 1;
-    }
-
-    document.getElementById(
-      "qty-" + productId
-    ).textContent =
-      quantities[productId];
-  }
-
-
-  function addToCart(
-    name,
-    price,
-    productId
-  ) {
-
-    const color =
-      document.getElementById(
-        "color-" + productId
-      ).value;
-
-    const size =
-      document.getElementById(
-        "size-" + productId
-      ).value;
-
-    const quantity =
-      quantities[productId];
-
-
-    const existing =
-      cart.find(item =>
-        item.name === name &&
-        item.color === color &&
-        item.size === size
-      );
-
-
-    if (existing) {
-
-      existing.quantity += quantity;
-
-    } else {
-
-      cart.push({
-
-        name: name,
-
-        price: price,
-
-        color: color,
-
-        size: size,
-
-        quantity: quantity
-
-      });
-    }
-
-
-    quantities[productId] = 1;
-
-    document.getElementById(
-      "qty-" + productId
-    ).textContent = "1";
-
-
-    updateCart();
-
-
-    document.getElementById(
-      "cartSection"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-
-
-  function removeFromCart(index) {
-
-    cart.splice(index, 1);
-
+  function addToCart(name, price) {
+    cart.push({ name, price });
     updateCart();
   }
-
 
   function updateCart() {
-
-    const cartItems =
-      document.getElementById(
-        "cartItems"
-      );
-
-    const cartCount =
-      document.getElementById(
-        "cartCount"
-      );
-
-    const cartTotal =
-      document.getElementById(
-        "cartTotal"
-      );
-
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
 
     if (cart.length === 0) {
-
-      cartItems.innerHTML =
-        "<p>Your cart is empty.</p>";
-
-      cartCount.textContent = "0";
-
-      cartTotal.textContent =
-        "0.00";
-
+      cartItems.innerHTML = "Cart is empty.";
+      cartTotal.textContent = "0.00";
       return;
     }
-
 
     let total = 0;
 
-    let count = 0;
+    cartItems.innerHTML = cart.map(item => {
+      total += item.price;
+      return `<div class="cart-item">${item.name} - $${item.price}</div>`;
+    }).join("");
 
-
-    cartItems.innerHTML = "";
-
-
-    cart.forEach(
-      (item, index) => {
-
-        const itemTotal =
-          item.price *
-          item.quantity;
-
-
-        total += itemTotal;
-
-        count += item.quantity;
-
-
-        const div =
-          document.createElement(
-            "div"
-          );
-
-
-        div.className =
-          "cart-item";
-
-
-        div.innerHTML = `
-
-          <div class="cart-item-info">
-
-            <strong>
-              ${escapeHtml(item.name)}
-            </strong>
-
-            <br>
-
-            Color:
-            ${escapeHtml(item.color)}
-
-            <br>
-
-            Size:
-            ${escapeHtml(item.size)}
-
-            <br>
-
-            Quantity:
-            ${item.quantity}
-
-            <br>
-
-            $${item.price} each
-
-          </div>
-
-
-          <strong>
-            $${itemTotal.toFixed(2)}
-          </strong>
-
-
-          <button
-            class="remove"
-            onclick="removeFromCart(${index})">
-
-            Remove
-
-          </button>
-        `;
-
-
-        cartItems.appendChild(
-          div
-        );
-      }
-    );
-
-
-    cartCount.textContent =
-      count;
-
-
-    cartTotal.textContent =
-      total.toFixed(2);
+    cartTotal.textContent = total.toFixed(2);
   }
 
 
-  function scrollToCart() {
-
-    document.getElementById(
-      "cartSection"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-
-
-  /*
-   ============================================================
-   SEND ORDER
-   ============================================================
-  */
+  // ========================
+  // SEND ORDER
+  // ========================
 
   async function sendOrder() {
+    const message = document.getElementById("message");
 
-    const message =
-      document.getElementById(
-        "message"
-      );
-
-
-    message.textContent = "";
-
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
 
     if (cart.length === 0) {
-
-      message.textContent =
-        "Please add at least one product to your cart.";
-
+      message.textContent = "Please add products to your cart.";
       return;
     }
 
-
-    const name =
-      document.getElementById(
-        "name"
-      ).value.trim();
-
-
-    const phone =
-      document.getElementById(
-        "phone"
-      ).value.trim();
-
-
-    const address =
-      document.getElementById(
-        "address"
-      ).value.trim();
-
-
-    if (
-      !name ||
-      !phone ||
-      !address
-    ) {
-
-      message.textContent =
-        "Please complete your name, phone number and address.";
-
+    if (!name || !phone || !address) {
+      message.textContent = "Please complete all fields.";
       return;
     }
 
-
-    /*
-      Convert cart to text for the
-      Supabase "items" column.
-    */
-
-    const orderDetails =
-      cart.map(item => {
-
-        return `${item.quantity} x ${item.name} | ${item.color} | Size ${item.size} | $${item.price}`;
-
-      }).join("\n");
-
+    const orderDetails = cart.map(item => `${item.name} - $${item.price}`).join("\n");
 
     try {
-
-      message.textContent =
-        "Sending order...";
-
-
-      /*
-       ========================================================
-       1. SAVE ORDER TO SUPABASE
-       ========================================================
-      */
-
-      const response =
-        await fetch(
-          `${SUPABASE_URL}/rest/v1/orders`,
-          {
-
-            method: "POST",
-
-            headers: {
-
-              "Content-Type":
-                "application/json",
-
-              "apikey":
-                SUPABASE_KEY,
-
-              "Authorization":
-                `Bearer ${SUPABASE_KEY}`,
-
-              "Prefer":
-                "return=minimal"
-            },
-
-
-            body:
-              JSON.stringify({
-
-                name: name,
-
-                phone: phone,
-
-                address: address,
-
-                items: orderDetails,
-
-                status: "New"
-
-              })
-          }
-        );
-
+      // Save to Supabase
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          address: address,
+          items: orderDetails,
+          status: "New"
+        })
+      });
 
       if (!response.ok) {
-
-        const errorText =
-          await response.text();
-
-        throw new Error(
-          errorText
-        );
+        throw new Error(await response.text());
       }
 
+      // Send to Telegram
+      await fetch(`${SUPABASE_URL}/functions/v1/send-order-telegram`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          address: address,
+          items: orderDetails,
+          status: "New"
+        })
+      });
 
-      /*
-       ========================================================
-       2. SEND ORDER TO TELEGRAM
-       ========================================================
-
-       The Telegram bot token is NOT here.
-
-       It is safely stored inside the
-       Supabase Edge Function.
-      */
-
-      try {
-
-        const telegramResponse =
-          await fetch(
-
-            `${SUPABASE_URL}/functions/v1/send-order-telegram`,
-
-            {
-
-              method: "POST",
-
-
-              headers: {
-
-                "Content-Type":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  `Bearer ${SUPABASE_KEY}`
-
-              },
-
-
-              body:
-                JSON.stringify({
-
-                  name: name,
-
-                  phone: phone,
-
-                  address: address,
-
-                  items: orderDetails,
-
-                  status: "New"
-
-                })
-
-            }
-          );
-
-
-        const telegramResult =
-          await telegramResponse.text();
-
-
-        console.log(
-          "Telegram function response:",
-          telegramResult
-        );
-
-
-        if (!response.ok) {
-  const errorText = await response.text();
-  throw new Error(errorText);
-}
-
-// Send order to Telegram
-await fetch(
-  `${SUPABASE_URL}/functions/v1/send-order-telegram`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`
-    },
-    body: JSON.stringify({
-      name: name,
-      phone: phone,
-      address: address,
-      items: orderDetails,
-      status: "New"
-    })
-  }
-);
-
+      message.textContent = "Order sent successfully! 🎉";
 
       cart = [];
-
-
       updateCart();
 
-
-      document.getElementById(
-        "name"
-      ).value = "";
-
-
-      document.getElementById(
-        "phone"
-      ).value = "";
-
-
-      document.getElementById(
-        "address"
-      ).value = "";
-
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("address").value = "";
 
     } catch (error) {
-
-      console.error(error);
-
-
-      message.textContent =
-        "Order sent successfuly: " +
-        error.message;// Send order to Telegram
-const tg = await fetch(
-  `${SUPABASE_URL}/functions/v1/send-order-telegram`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`
-    },
-    body: JSON.stringify({
-      name,
-      phone,
-      address,
-      items: orderDetails,
-      status: "New"
-    })
-  }
-);
-
-console.log(await tg.text());
+      message.textContent = "Order failed: " + error.message;
     }
   }
-
-
-  /*
-   ============================================================
-   SECURITY
-   ============================================================
-  */
-
-  function escapeHtml(value) {
-
-    return String(value)
-
-      .replaceAll(
-        "&",
-        "&amp;"
-      )
-
-      .replaceAll(
-        "<",
-        "&lt;"
-      )
-
-      .replaceAll(
-        ">",
-        "&gt;"
-      )
-
-      .replaceAll(
-        '"',
-        "&quot;"
-      )
-
-      .replaceAll(
-        "'",
-        "&#039;"
-      );
-  }
-
-
-  /*
-   ============================================================
-   INITIALIZE
-   ============================================================
-  */
-
-  updateCart();
-
 </script>
 
 </body>
