@@ -215,10 +215,33 @@
             }
 
 
-            // Success
-            message.textContent =
-                "Order sent successfully!";
+            // Send Telegram notification
+const TELEGRAM_BOT_TOKEN = "8949249564:AAH0nQy94Bq9Lvx7tnNDWA10JUhC8FYqjZc";
+const TELEGRAM_CHAT_ID = "7299528066";
 
+const telegramMessage = `
+🛍️ New Clothes Order
+
+👤 Name: ${name}
+📱 Phone: ${phone}
+📍 Address: ${address}
+👕 Order: ${order}
+`;
+
+await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: telegramMessage
+    })
+});
+
+// Success
+message.textContent =
+    "Order sent successfully!";
 
             // Clear form
             document
