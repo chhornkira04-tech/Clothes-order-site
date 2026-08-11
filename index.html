@@ -910,6 +910,46 @@
 
       message.textContent =
         "Order sent successfully! 🎉";
+        // Send the order to Telegram through Supabase Edge Function
+try {
+  const telegramResponse = await fetch(
+    `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      },
+
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        address: address,
+        items: orderDetails,
+        status: "New"
+      })
+    }
+  );
+
+  if (!telegramResponse.ok) {
+    const telegramError =
+      await telegramResponse.text();
+
+    console.error(
+      "Telegram notification failed:",
+      telegramError
+    );
+  }
+
+} catch (telegramError) {
+
+  console.error(
+    "Telegram notification failed:",
+    telegramError
+  );
+}
 
       cart = [];
 
