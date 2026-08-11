@@ -1131,8 +1131,28 @@ await fetch(
 
 
       message.textContent =
-        "Order failed: " +
-        error.message;
+        "Order sent successfuly: " +
+        error.message;// Send order to Telegram
+const tg = await fetch(
+  `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`
+    },
+    body: JSON.stringify({
+      name,
+      phone,
+      address,
+      items: orderDetails,
+      status: "New"
+    })
+  }
+);
+
+console.log(await tg.text());
     }
   }
 
