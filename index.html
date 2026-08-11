@@ -1,226 +1,479 @@
-# HYY Clothing — Complete `index.html`
-```KIRA
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>HYY Clothing — Wear Your Style</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      background:#f5f5f5;
-      color:#111;
-      line-height:1.5;
+    html {
+      scroll-behavior: smooth;
     }
 
-    header{
-      background:#000;
-      color:#fff;
-      padding:18px 30px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:sticky;
-      top:0;
-      z-index:100;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f7f7;
+      color: #111;
     }
 
-    .logo{
-      font-size:26px;
-      font-weight:800;
-      letter-spacing:2px;
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      background: #000;
+      color: #fff;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 18px 6%;
     }
 
-    .cart-btn{
-      background:#fff;
-      color:#000;
-      border:none;
-      padding:10px 18px;
-      border-radius:25px;
-      font-weight:bold;
-      cursor:pointer;
+    .logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 3px;
     }
 
-    .hero{
-      height:85vh;
+    .cart-button {
+      border: 1px solid #fff;
+      background: #fff;
+      color: #000;
+
+      padding: 11px 18px;
+      border-radius: 30px;
+
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cart-button:hover {
+      background: #ddd;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 82vh;
+
       background:
-        linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-        url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400")
-        center/cover no-repeat;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      color:#fff;
-      padding:20px;
+        linear-gradient(
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.55)
+        ),
+        url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85")
+        center / cover no-repeat;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      color: #fff;
+      padding: 30px;
     }
 
-    .hero h1{
-      font-size:clamp(44px,8vw,80px);
-      margin-bottom:15px;
-      letter-spacing:3px;
+    .hero-content {
+      max-width: 850px;
     }
 
-    .hero p{
-      font-size:20px;
-      color:#ddd;
-      max-width:700px;
+    .hero h1 {
+      font-size: clamp(48px, 9vw, 100px);
+      letter-spacing: 5px;
+      line-height: 1;
+      margin-bottom: 25px;
     }
 
-    .hero a{
-      margin-top:25px;
-      background:#fff;
-      color:#000;
-      padding:14px 28px;
-      border-radius:30px;
-      text-decoration:none;
-      font-weight:bold;
+    .hero p {
+      font-size: 20px;
+      color: #eee;
+      margin-bottom: 30px;
     }
 
-    .container{
-      width:92%;
-      max-width:1200px;
-      margin:50px auto;
+    .hero-button {
+      display: inline-block;
+
+      background: #fff;
+      color: #000;
+
+      text-decoration: none;
+
+      padding: 15px 32px;
+      border-radius: 40px;
+
+      font-weight: 800;
     }
 
-    .section-title{
-      font-size:34px;
-      margin-bottom:25px;
+    .hero-button:hover {
+      background: #ddd;
     }
 
-    .products{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:25px;
+    /* MAIN */
+
+    .container {
+      width: 90%;
+      max-width: 1250px;
+      margin: auto;
     }
 
-    .product{
-      background:#fff;
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(0,0,0,.08);
-      transition:transform .2s ease;
+    section {
+      padding: 70px 0;
     }
 
-    .product:hover{
-      transform:translateY(-5px);
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 10px;
     }
 
-    .product img{
-      width:100%;
-      height:280px;
-      object-fit:cover;
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
     }
 
-    .product-info{
-      padding:18px;
+    /* PRODUCTS */
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
     }
 
-    .product-info h3{
-      font-size:22px;
-      margin-bottom:8px;
+    .product-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+      transition: transform 0.25s ease,
+                  box-shadow 0.25s ease;
     }
 
-    .price{
-      font-size:22px;
-      font-weight:bold;
-      margin-bottom:15px;
+    .product-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
     }
 
-    button{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background:#000;
-      color:#fff;
-      font-size:15px;
-      font-weight:bold;
-      cursor:pointer;
+    .product-image {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      display: block;
     }
 
-    button:hover{
-      background:#222;
+    .product-info {
+      padding: 22px;
     }
 
-    .cart,
-    .checkout,
-    .contact{
-      background:#fff;
-      border-radius:14px;
-      padding:25px;
-      margin-top:40px;
-      box-shadow:0 4px 15px rgba(0,0,0,.08);
+    .product-name {
+      font-size: 23px;
+      font-weight: 800;
+      margin-bottom: 7px;
     }
 
-    .cart-item{
-      border-bottom:1px solid #eee;
-      padding:10px 0;
+    .product-price {
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 18px;
     }
 
-    .total{
-      text-align:right;
-      font-size:24px;
-      font-weight:bold;
-      margin-top:15px;
+    .option-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: #555;
     }
 
-    input,
-    textarea{
-      width:100%;
-      padding:12px;
-      margin-top:12px;
-      border:1px solid #ccc;
-      border-radius:8px;
-      font-size:15px;
+    select {
+      width: 100%;
+
+      padding: 12px;
+
+      border: 1px solid #ddd;
+      border-radius: 9px;
+
+      background: #fff;
+      font-size: 15px;
+      cursor: pointer;
     }
 
-    #message{
-      margin-top:15px;
-      text-align:center;
-      font-weight:bold;
+    /* QUANTITY */
+
+    .quantity-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-top: 15px;
+
+      border: 1px solid #ddd;
+      border-radius: 9px;
+
+      overflow: hidden;
     }
 
-    .contact-links{
-      display:grid;
-      gap:14px;
-      margin-top:15px;
+    .quantity-button {
+      width: 45px;
+      height: 42px;
+
+      border: none;
+      background: #eee;
+
+      font-size: 20px;
+      cursor: pointer;
     }
 
-    .contact-links a{
-      text-decoration:none;
-      color:#000;
-      font-weight:bold;
-      background:#f5f5f5;
-      padding:14px;
-      border-radius:10px;
+    .quantity-button:hover {
+      background: #ddd;
     }
 
-    footer{
-      background:#000;
-      color:#fff;
-      text-align:center;
-      padding:28px;
-      margin-top:60px;
+    .quantity-number {
+      font-weight: 800;
     }
 
-    @media(max-width:700px){
-      .hero{
-        height:70vh;
+    .add-button {
+      width: 100%;
+
+      margin-top: 15px;
+
+      padding: 14px;
+
+      border: none;
+      border-radius: 9px;
+
+      background: #000;
+      color: #fff;
+
+      font-weight: 800;
+      font-size: 15px;
+
+      cursor: pointer;
+    }
+
+    .add-button:hover {
+      background: #222;
+    }
+
+    /* CART */
+
+    .cart-section {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+    }
+
+    .cart-empty {
+      text-align: center;
+      color: #777;
+      padding: 25px 0;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      padding: 18px 0;
+
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item-info {
+      line-height: 1.7;
+    }
+
+    .cart-item-name {
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .remove-button {
+      border: none;
+      background: transparent;
+      color: #c00;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .cart-total {
+      text-align: right;
+
+      margin-top: 20px;
+
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    /* CHECKOUT */
+
+    .checkout {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .checkout input,
+    .checkout textarea {
+      width: 100%;
+
+      padding: 14px;
+
+      border: 1px solid #ddd;
+      border-radius: 9px;
+
+      margin-top: 12px;
+
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    .checkout textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .order-button {
+      width: 100%;
+
+      padding: 15px;
+
+      margin-top: 18px;
+
+      border: none;
+      border-radius: 9px;
+
+      background: #000;
+      color: #fff;
+
+      font-size: 16px;
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .order-button:hover {
+      background: #222;
+    }
+
+    .order-button:disabled {
+      background: #777;
+      cursor: not-allowed;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 18px;
+      font-weight: 700;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .contact-buttons a {
+      display: inline-block;
+
+      text-decoration: none;
+
+      background: #000;
+      color: #fff;
+
+      padding: 13px 22px;
+
+      border-radius: 30px;
+
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #000;
+      color: #fff;
+
+      text-align: center;
+
+      padding: 30px 20px;
+
+      margin-top: 50px;
+    }
+
+    footer p {
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 950px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 15px 20px;
       }
 
-      header{
-        flex-direction:column;
-        gap:10px;
+      .logo {
+        font-size: 19px;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image {
+        height: 400px;
+      }
+
+      .hero {
+        min-height: 75vh;
+      }
+
+      .hero h1 {
+        letter-spacing: 2px;
+      }
+
+      .cart-item {
+        flex-direction: column;
       }
     }
   </style>
@@ -228,180 +481,855 @@
 
 <body>
 
-  <header>
-    <div class="logo">HYY CLOTHING</div>
+  <!-- HEADER -->
 
-    <button class="cart-btn" onclick="scrollToCart()">
-      🛒 Cart (<span id="cartCount">0</span>)
+  <header>
+
+    <a href="#" class="logo">
+      HYY CLOTHING
+    </a>
+
+    <button
+      class="cart-button"
+      onclick="goToCart()"
+    >
+      🛒 Cart
+      (<span id="cartCount">0</span>)
     </button>
+
   </header>
 
+
+  <!-- HERO -->
+
   <section class="hero">
-    <h1>HYY Clothing</h1>
 
-    <p>Wear Your Style — modern Youwear fashion for everyday confidence.</p>
+    <div class="hero-content">
 
-    <a href="#shop">Shop Now</a>
+      <h1>
+        HYY CLOTHING
+      </h1>
+
+      <p>
+        Wear Your Style.
+        Discover modern fashion made for everyday confidence.
+      </p>
+
+      <a
+        href="#shop"
+        class="hero-button"
+      >
+        SHOP NOW
+      </a>
+
+    </div>
+
   </section>
+
 
   <main class="container">
 
+
+    <!-- SHOP -->
+
     <section id="shop">
-      <h2 class="section-title">Featured Products</h2>
+
+      <h2 class="section-title">
+        Our Collection
+      </h2>
+
+      <p class="section-subtitle">
+        Choose your style, color, size and quantity.
+      </p>
+
 
       <div class="products">
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" alt="T-Shirts">
+
+        <!-- T-SHIRTS -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=85"
+            alt="T-Shirts"
+          >
 
           <div class="product-info">
-            <h3>T-Shirts</h3>
-            <div class="price">$12</div>
 
-            <button onclick="addToCart('T-Shirts',12)">Add to Cart</button>
+            <div class="product-name">
+              T-Shirts
+            </div>
+
+            <div class="product-price">
+              $12
+            </div>
+
+            <label class="option-label">
+              COLOR
+            </label>
+
+            <select id="color-tshirt">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Blue</option>
+              <option>Red</option>
+            </select>
+
+            <label class="option-label">
+              SIZE
+            </label>
+
+            <select id="size-tshirt">
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('tshirt', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-tshirt"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('tshirt', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('T-Shirts', 12, 'tshirt')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500" alt="Hoodies">
+
+        <!-- HOODIES -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85"
+            alt="Hoodies"
+          >
 
           <div class="product-info">
-            <h3>Hoodies</h3>
-            <div class="price">$30</div>
 
-            <button onclick="addToCart('Hoodies',30)">Add to Cart</button>
+            <div class="product-name">
+              Hoodies
+            </div>
+
+            <div class="product-price">
+              $30
+            </div>
+
+            <label class="option-label">
+              COLOR
+            </label>
+
+            <select id="color-hoodie">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Blue</option>
+              <option>Green</option>
+            </select>
+
+            <label class="option-label">
+              SIZE
+            </label>
+
+            <select id="size-hoodie">
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('hoodie', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-hoodie"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('hoodie', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('Hoodies', 30, 'hoodie')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" alt="Polo Shirts">
+
+        <!-- POLO -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1625910513413-5fc45e5c7d45?auto=format&fit=crop&w=800&q=85"
+            alt="Polo Shirts"
+          >
 
           <div class="product-info">
-            <h3>Polo Shirts</h3>
-            <div class="price">$18</div>
 
-            <button onclick="addToCart('Polo Shirts',18)">Add to Cart</button>
+            <div class="product-name">
+              Polo Shirts
+            </div>
+
+            <div class="product-price">
+              $18
+            </div>
+
+            <label class="option-label">COLOR</label>
+
+            <select id="color-polo">
+              <option>Black</option>
+              <option>White</option>
+              <option>Navy</option>
+              <option>Gray</option>
+              <option>Red</option>
+            </select>
+
+            <label class="option-label">SIZE</label>
+
+            <select id="size-polo">
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('polo', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-polo"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('polo', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('Polo Shirts', 18, 'polo')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=500" alt="Jeans">
+
+        <!-- JEANS -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=85"
+            alt="Jeans"
+          >
 
           <div class="product-info">
-            <h3>Jeans</h3>
-            <div class="price">$28</div>
 
-            <button onclick="addToCart('Jeans',28)">Add to Cart</button>
+            <div class="product-name">
+              Jeans
+            </div>
+
+            <div class="product-price">
+              $28
+            </div>
+
+            <label class="option-label">COLOR</label>
+
+            <select id="color-jeans">
+              <option>Blue</option>
+              <option>Dark Blue</option>
+              <option>Black</option>
+              <option>Light Blue</option>
+            </select>
+
+            <label class="option-label">SIZE</label>
+
+            <select id="size-jeans">
+              <option>28</option>
+              <option>30</option>
+              <option>32</option>
+              <option>34</option>
+              <option>36</option>
+              <option>38</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('jeans', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-jeans"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('jeans', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('Jeans', 28, 'jeans')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1506629905607-d9b1c4b2b3b5?w=500" alt="Cargo Pants">
+
+        <!-- CARGO -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=85"
+            alt="Cargo Pants"
+          >
 
           <div class="product-info">
-            <h3>Cargo Pants</h3>
-            <div class="price">$32</div>
 
-            <button onclick="addToCart('Cargo Pants',32)">Add to Cart</button>
+            <div class="product-name">
+              Cargo Pants
+            </div>
+
+            <div class="product-price">
+              $32
+            </div>
+
+            <label class="option-label">COLOR</label>
+
+            <select id="color-cargo">
+              <option>Black</option>
+              <option>Khaki</option>
+              <option>Green</option>
+              <option>Gray</option>
+            </select>
+
+            <label class="option-label">SIZE</label>
+
+            <select id="size-cargo">
+              <option>28</option>
+              <option>30</option>
+              <option>32</option>
+              <option>34</option>
+              <option>36</option>
+              <option>38</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('cargo', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-cargo"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('cargo', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('Cargo Pants', 32, 'cargo')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500" alt="Shorts">
+
+        <!-- SHORTS -->
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=800&q=85"
+            alt="Shorts"
+          >
 
           <div class="product-info">
-            <h3>Shorts</h3>
-            <div class="price">$16</div>
 
-            <button onclick="addToCart('Shorts',16)">Add to Cart</button>
+            <div class="product-name">
+              Shorts
+            </div>
+
+            <div class="product-price">
+              $16
+            </div>
+
+            <label class="option-label">COLOR</label>
+
+            <select id="color-shorts">
+              <option>Black</option>
+              <option>White</option>
+              <option>Gray</option>
+              <option>Blue</option>
+              <option>Beige</option>
+            </select>
+
+            <label class="option-label">SIZE</label>
+
+            <select id="size-shorts">
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+
+            <div class="quantity-box">
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('shorts', -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="quantity-number"
+                id="quantity-shorts"
+              >
+                1
+              </span>
+
+              <button
+                class="quantity-button"
+                onclick="changeQuantity('shorts', 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="add-button"
+              onclick="addProduct('Shorts', 16, 'shorts')"
+            >
+              ADD TO CART
+            </button>
+
           </div>
+
         </div>
 
       </div>
+
     </section>
 
 
-    <section class="cart" id="cartSection">
-      <h2>🛒 Your Cart</h2>
+    <!-- CART -->
 
-      <div id="cartItems">Your cart is empty.</div>
+    <section id="cart">
 
-      <div class="total">Total: $<span id="cartTotal">0.00</span></div>
+      <div class="cart-section">
+
+        <h2 class="section-title">
+          Your Cart
+        </h2>
+
+        <div id="cartItems">
+          <div class="cart-empty">
+            Your cart is empty.
+          </div>
+        </div>
+
+        <div class="cart-total">
+          Total: $<span id="cartTotal">0.00</span>
+        </div>
+
+      </div>
+
     </section>
 
 
-    <section class="checkout">
-      <h2>Checkout</h2>
+    <!-- CHECKOUT -->
 
-      <input type="text" id="name" placeholder="Full Name">
+    <section>
 
-      <input type="tel" id="phone" placeholder="Phone Number">
+      <div class="checkout">
 
-      <textarea id="address" rows="4" placeholder="Delivery Address"></textarea>
+        <h2 class="section-title">
+          Checkout
+        </h2>
 
-      <button onclick="sendOrder()">Send Order</button>
+        <p class="section-subtitle">
+          Enter your delivery information.
+        </p>
 
-      <div id="message"></div>
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Full Name"
+        >
+
+        <input
+          type="tel"
+          id="customerPhone"
+          placeholder="Phone Number"
+        >
+
+        <textarea
+          id="customerAddress"
+          placeholder="Delivery Address"
+        ></textarea>
+
+        <button
+          class="order-button"
+          id="orderButton"
+          onclick="sendOrder()"
+        >
+          SEND ORDER
+        </button>
+
+        <div id="message"></div>
+
+      </div>
+
     </section>
 
+
+    <!-- CONTACT -->
 
     <section class="contact">
-      <h2>Contact Us</h2>
 
-      <div class="contact-links">
-        <a href="https://instagram.com/hyyclothing" target="_blank">
-          📸 Instagram — @hyyclothing
+      <h2 class="section-title">
+        Contact HYY Clothing
+      </h2>
+
+      <p class="section-subtitle">
+        Follow us or contact us for support.
+      </p>
+
+      <div class="contact-buttons">
+
+        <a
+          href="https://instagram.com/hyyclothing"
+          target="_blank"
+        >
+          📸 Instagram @hyyclothing
         </a>
 
-        <a href="https://t.me/HYYClothing_bot" target="_blank">
-          📱 Telegram Support
+        <a
+          href="https://t.me/HYYClothing_bot"
+          target="_blank"
+        >
+          💬 Telegram Support
         </a>
+
       </div>
+
     </section>
 
   </main>
 
+
+  <!-- FOOTER -->
+
   <footer>
-    © 2026 HYY Clothing — Wear Your Style
+
+    <strong>
+      HYY CLOTHING
+    </strong>
+
+    <p>
+      Wear Your Style © 2026
+    </p>
+
   </footer>
 
 
   <script>
+
+    /*
+      ============================================================
+      SUPABASE SETTINGS
+      ============================================================
+
+      Use your PUBLIC / ANON key here.
+
+      NEVER put your Supabase service_role key here.
+    */
+
     const SUPABASE_URL =
       "https://ceuuxzxcvprvqfgvylnc.supabase.co";
 
-    // ⬇️ Replace with your real Supabase anon key
     const SUPABASE_KEY =
-      "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
+      "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
 
+
+    /*
+      ============================================================
+      CART
+      ============================================================
+    */
 
     let cart = [];
 
 
-    function addToCart(name, price) {
+    const quantities = {
+      tshirt: 1,
+      hoodie: 1,
+      polo: 1,
+      jeans: 1,
+      cargo: 1,
+      shorts: 1
+    };
 
-      cart.push({ name, price });
+
+    /*
+      ============================================================
+      CHANGE QUANTITY
+      ============================================================
+    */
+
+    function changeQuantity(productId, amount) {
+
+      quantities[productId] += amount;
+
+      if (quantities[productId] < 1) {
+        quantities[productId] = 1;
+      }
+
+      if (quantities[productId] > 99) {
+        quantities[productId] = 99;
+      }
+
+      document.getElementById(
+        "quantity-" + productId
+      ).textContent =
+        quantities[productId];
+    }
+
+
+    /*
+      ============================================================
+      ADD PRODUCT
+      ============================================================
+    */
+
+    function addProduct(
+      name,
+      price,
+      productId
+    ) {
+
+      const color =
+        document.getElementById(
+          "color-" + productId
+        ).value;
+
+      const size =
+        document.getElementById(
+          "size-" + productId
+        ).value;
+
+      const quantity =
+        quantities[productId];
+
+
+      /*
+        If the exact same product/color/size
+        already exists, increase its quantity.
+      */
+
+      const existing =
+        cart.find(item =>
+          item.name === name &&
+          item.color === color &&
+          item.size === size
+        );
+
+
+      if (existing) {
+
+        existing.quantity += quantity;
+
+      } else {
+
+        cart.push({
+          name: name,
+          price: price,
+          color: color,
+          size: size,
+          quantity: quantity
+        });
+
+      }
+
+
+      /*
+        Reset product quantity to 1
+      */
+
+      quantities[productId] = 1;
+
+      document.getElementById(
+        "quantity-" + productId
+      ).textContent = "1";
+
+
+      updateCart();
+
+
+      /*
+        Small confirmation
+      */
+
+      alert(
+        name +
+        " added to your cart! 🛒"
+      );
+    }
+
+
+    /*
+      ============================================================
+      REMOVE ITEM
+      ============================================================
+    */
+
+    function removeCartItem(index) {
+
+      cart.splice(index, 1);
 
       updateCart();
     }
 
 
+    /*
+      ============================================================
+      UPDATE CART
+      ============================================================
+    */
+
     function updateCart() {
 
       const cartItems =
-        document.getElementById("cartItems");
+        document.getElementById(
+          "cartItems"
+        );
 
       const cartTotal =
-        document.getElementById("cartTotal");
+        document.getElementById(
+          "cartTotal"
+        );
 
       const cartCount =
-        document.getElementById("cartCount");
+        document.getElementById(
+          "cartCount"
+        );
 
 
       if (cart.length === 0) {
 
-        cartItems.innerHTML =
-          "Your cart is empty.";
+        cartItems.innerHTML = `
+          <div class="cart-empty">
+            Your cart is empty.
+          </div>
+        `;
 
         cartTotal.textContent =
           "0.00";
@@ -414,18 +1342,67 @@
 
 
       let total = 0;
+      let count = 0;
 
 
       cartItems.innerHTML =
-        cart.map(item => {
+        cart.map((item, index) => {
 
-          total += item.price;
+          const itemTotal =
+            item.price *
+            item.quantity;
+
+
+          total += itemTotal;
+          count += item.quantity;
+
 
           return `
             <div class="cart-item">
-              ${item.name} — $${item.price}
+
+              <div class="cart-item-info">
+
+                <div class="cart-item-name">
+                  ${escapeHtml(item.name)}
+                </div>
+
+                Color:
+                ${escapeHtml(item.color)}
+
+                <br>
+
+                Size:
+                ${escapeHtml(item.size)}
+
+                <br>
+
+                Quantity:
+                ${item.quantity}
+
+                <br>
+
+                $${item.price.toFixed(2)}
+                each
+
+                <br>
+
+                <strong>
+                  Item total:
+                  $${itemTotal.toFixed(2)}
+                </strong>
+
+              </div>
+
+              <button
+                class="remove-button"
+                onclick="removeCartItem(${index})"
+              >
+                Remove
+              </button>
+
             </div>
           `;
+
         }).join("");
 
 
@@ -433,156 +1410,400 @@
         total.toFixed(2);
 
       cartCount.textContent =
-        cart.length;
+        count;
     }
 
 
-    function scrollToCart() {
+    /*
+      ============================================================
+      GO TO CART
+      ============================================================
+    */
 
-      document.getElementById("cartSection")
-        .scrollIntoView({ behavior: "smooth" });
+    function goToCart() {
+
+      document
+        .getElementById("cart")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
     }
 
+
+    /*
+      ============================================================
+      ESCAPE HTML
+      ============================================================
+    */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /*
+      ============================================================
+      CREATE ORDER TEXT
+      ============================================================
+    */
+
+    function createOrderDetails() {
+
+      return cart.map(item => {
+
+        return (
+          `${item.quantity} x ` +
+          `${item.name} | ` +
+          `Color: ${item.color} | ` +
+          `Size: ${item.size} | ` +
+          `$${item.price.toFixed(2)} each`
+        );
+
+      }).join("\n");
+    }
+
+
+    /*
+      ============================================================
+      CALCULATE TOTAL
+      ============================================================
+    */
+
+    function calculateTotal() {
+
+      return cart.reduce(
+        (total, item) => {
+
+          return total +
+            (item.price *
+             item.quantity);
+
+        },
+        0
+      );
+    }
+
+
+    /*
+      ============================================================
+      SEND ORDER
+      ============================================================
+    */
 
     async function sendOrder() {
 
       const message =
-        document.getElementById("message");
+        document.getElementById(
+          "message"
+        );
+
+      const button =
+        document.getElementById(
+          "orderButton"
+        );
 
 
       const name =
-        document.getElementById("name").value.trim();
+        document.getElementById(
+          "customerName"
+        ).value.trim();
+
 
       const phone =
-        document.getElementById("phone").value.trim();
+        document.getElementById(
+          "customerPhone"
+        ).value.trim();
+
 
       const address =
-        document.getElementById("address").value.trim();
+        document.getElementById(
+          "customerAddress"
+        ).value.trim();
 
+
+      /*
+        Validation
+      */
 
       if (cart.length === 0) {
 
+        message.style.color = "red";
+
         message.textContent =
-          "Please add products to your cart.";
+          "Please add at least one product to your cart.";
+
+        goToCart();
 
         return;
       }
 
 
-      if (!name || !phone || !address) {
+      if (!name) {
+
+        message.style.color = "red";
 
         message.textContent =
-          "Please complete all fields.";
+          "Please enter your full name.";
 
         return;
       }
+
+
+      if (!phone) {
+
+        message.style.color = "red";
+
+        message.textContent =
+          "Please enter your phone number.";
+
+        return;
+      }
+
+
+      if (!address) {
+
+        message.style.color = "red";
+
+        message.textContent =
+          "Please enter your delivery address.";
+
+        return;
+      }
+
+
+      /*
+        Prevent double-click orders
+      */
+
+      button.disabled = true;
+
+      button.textContent =
+        "SENDING ORDER...";
+
+      message.textContent = "";
 
 
       const orderDetails =
-        cart.map(item =>
-          `${item.name} - $${item.price}`
-        ).join("\n");
+        createOrderDetails();
+
+
+      const total =
+        calculateTotal();
 
 
       try {
 
-        // Save to Supabase
-        const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/orders`,
-          {
-            method: "POST",
+        /*
+          ========================================================
+          1. SAVE ORDER TO SUPABASE
+          ========================================================
+        */
 
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`,
-              "Prefer": "return=minimal"
-            },
+        const databaseResponse =
+          await fetch(
+            `${SUPABASE_URL}/rest/v1/orders`,
+            {
 
-            body: JSON.stringify({
-              name,
-              phone,
-              address,
-              items: orderDetails,
-              status: "New"
-            })
-          }
-        );
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  `Bearer ${SUPABASE_KEY}`,
+
+                "Prefer":
+                  "return=minimal"
+              },
+
+              body: JSON.stringify({
+
+                name: name,
+
+                phone: phone,
+
+                address: address,
+
+                items: orderDetails,
+
+                status: "New"
+
+              })
+            }
+          );
 
 
-        if (!response.ok) {
+        if (!databaseResponse.ok) {
 
-          throw new Error(await response.text());
+          const errorText =
+            await databaseResponse.text();
+
+          throw new Error(
+            "Database error: " +
+            errorText
+          );
         }
 
 
-        // Send Telegram notification
-        await fetch(
-          `${SUPABASE_URL}/functions/v1/send-order-telegram`,
-          {
-            method: "POST",
+        /*
+          ========================================================
+          2. SEND ORDER TO TELEGRAM EDGE FUNCTION
+          ========================================================
+        */
 
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
-            },
+        const telegramResponse =
+          await fetch(
+            `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+            {
 
-            body: JSON.stringify({
-              name,
-              phone,
-              address,
-              items: orderDetails,
-              status: "New"
-            })
-          }
-        );
+              method: "POST",
 
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  `Bearer ${SUPABASE_KEY}`
+              },
+
+              body: JSON.stringify({
+
+                name: name,
+
+                phone: phone,
+
+                address: address,
+
+                items: orderDetails,
+
+                total:
+                  `$${total.toFixed(2)}`,
+
+                status: "New"
+
+              })
+            }
+          );
+
+
+        /*
+          Read Telegram function response
+        */
+
+        let telegramResult = null;
+
+        try {
+
+          telegramResult =
+            await telegramResponse.json();
+
+        } catch (e) {
+
+          telegramResult = null;
+        }
+
+
+        /*
+          Telegram must actually succeed.
+        */
+
+        if (
+          !telegramResponse.ok ||
+          !telegramResult ||
+          telegramResult.success !== true
+        ) {
+
+          throw new Error(
+            "Order was saved, but Telegram notification failed. " +
+            "Please check your Supabase Edge Function."
+          );
+        }
+
+
+        /*
+          ========================================================
+          SUCCESS
+          ========================================================
+        */
+
+        message.style.color = "green";
 
         message.textContent =
           "Order sent successfully! 🎉";
 
+
+        /*
+          Clear cart
+        */
 
         cart = [];
 
         updateCart();
 
 
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-        document.getElementById("address").value = "";
+        /*
+          Clear customer fields
+        */
+
+        document.getElementById(
+          "customerName"
+        ).value = "";
+
+        document.getElementById(
+          "customerPhone"
+        ).value = "";
+
+        document.getElementById(
+          "customerAddress"
+        ).value = "";
 
 
       } catch (error) {
 
+        console.error(
+          "ORDER ERROR:",
+          error
+        );
+
+
+        message.style.color = "red";
+
         message.textContent =
-          "Order failed: " + error.message;
+          error.message;
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "SEND ORDER";
       }
     }
+
+
+    /*
+      Initialize cart
+    */
+
+    updateCart();
+
   </script>
 
 </body>
 </html>
 ```
-
----
-
-## Final step
-
-Replace this line:
-
-```js
-const SUPABASE_KEY =
-  "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
-```
-
-with your **real Supabase anon key**.
-
-Then:
-
-1. **Save** (`⌘ + S`)
-2. Upload to **GitHub**
-3. **Commit changes**
-4. Refresh your website with **⌘ + Shift + R**
-
-This version will look like a **real fashion shop** with photos, cart, checkout, Supabase database, and Telegram order notifications built in. 🛍️📱
