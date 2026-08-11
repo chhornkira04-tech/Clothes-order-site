@@ -1078,37 +1078,30 @@
         );
 
 
-        if (
-          !telegramResponse.ok
-        ) {
+        if (!response.ok) {
+  const errorText = await response.text();
+  throw new Error(errorText);
+}
 
-          console.error(
-            "Telegram notification failed:",
-            telegramResult
-          );
-
-        }
-
-      } catch (
-        telegramError
-      ) {
-
-        console.error(
-          "Telegram connection failed:",
-          telegramError
-        );
-
-      }
-
-
-      /*
-       ========================================================
-       3. SUCCESS
-       ========================================================
-      */
-
-      message.textContent =
-        "Order sent successfully! 🎉";
+// Send order to Telegram
+await fetch(
+  `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`
+    },
+    body: JSON.stringify({
+      name: name,
+      phone: phone,
+      address: address,
+      items: orderDetails,
+      status: "New"
+    })
+  }
+);
 
 
       cart = [];
