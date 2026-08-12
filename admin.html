@@ -1,37 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HYY Clothing Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HYY Admin Panel</title>
 
   <style>
-    body{font-family:Arial,sans-serif;background:#111;color:#fff;margin:0;padding:20px;}
-    .box{background:#1c1c1c;padding:20px;border-radius:16px;margin-bottom:20px;}
-    input,select{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;}
-    button{background:#fff;color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold;}
-    button:hover{background:#ddd;}
-    table{width:100%;border-collapse:collapse;margin-top:15px;}
-    th,td{border:1px solid #333;padding:10px;text-align:left;}
+    body{
+      font-family:Arial,sans-serif;
+      background:#111;
+      color:white;
+      margin:0;
+      padding:20px;
+    }
+
+    .box{
+      background:#1c1c1c;
+      padding:20px;
+      border-radius:16px;
+      margin-bottom:20px;
+    }
+
+    input,select{
+      width:100%;
+      padding:10px;
+      margin:8px 0;
+      border:none;
+      border-radius:8px;
+    }
+
+    button{
+      background:white;
+      color:black;
+      border:none;
+      padding:10px 16px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:15px;
+    }
+
+    th,td{
+      border:1px solid #333;
+      padding:10px;
+      text-align:left;
+    }
+
     th{background:#222;}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-    @media(max-width:768px){.grid{grid-template-columns:1fr;}}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    @media(max-width:768px){
+      .grid{grid-template-columns:1fr;}
+    }
   </style>
 </head>
+
 <body>
 
 <div class="box" id="loginBox">
-  <h2>Admin Login</h2>
+  <h2>HYY Admin Login</h2>
+
   <input type="email" id="email" placeholder="Admin Email">
+
   <input type="password" id="password" placeholder="Password">
+
   <button onclick="login()">Login</button>
-  <p id="loginMsg"></p>
+
+  <p id="msg"></p>
 </div>
 
 <div id="adminPanel" style="display:none;">
 
   <div class="box">
     <h1>HYY Clothing Admin</h1>
+
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -60,6 +112,7 @@
             <th>Stock</th>
           </tr>
         </thead>
+
         <tbody id="stockBody"></tbody>
       </table>
     </div>
@@ -76,6 +129,7 @@
             <th>Action</th>
           </tr>
         </thead>
+
         <tbody id="ordersBody"></tbody>
       </table>
     </div>
@@ -85,44 +139,75 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-const SUPABASE_URL = "https://ceuuxzxcvprvqfgvylnc.supabase.co";
-const SUPABASE_KEY = "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
+const SUPABASE_URL = "https://hfoebqodkfnbqksxnfmp.supabase.co";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_KEY = "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";
 
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+// LOGIN
 async function login(){
-  const email=document.getElementById('email').value;
-  const password=document.getElementById('password').value;
 
-  const {error}=await supabase.auth.signInWithPassword({email,password});
+  const email =
+    document.getElementById('email').value.trim();
+
+  const password =
+    document.getElementById('password').value;
+
+  const { error } =
+    await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
   if(error){
-    document.getElementById('loginMsg').innerText=error.message;
+
+    document.getElementById('msg').innerText =
+      error.message;
+
     return;
   }
 
-  document.getElementById('loginBox').style.display='none';
-  document.getElementById('adminPanel').style.display='block';
+  document.getElementById('loginBox').style.display =
+    'none';
+
+  document.getElementById('adminPanel').style.display =
+    'block';
 
   loadOrders();
   loadStock();
 }
 
+// LOGOUT
 async function logout(){
+
   await supabase.auth.signOut();
+
   location.reload();
 }
 
+// LOAD STOCK
 async function loadStock(){
-  const {data,error}=await supabase.from('stock').select('*').order('product');
-  if(error) return alert(error.message);
 
-  const body=document.getElementById('stockBody');
-  body.innerHTML='';
+  const { data } =
+    await supabase
+      .from('stock')
+      .select('*')
+      .order('product');
 
-  data.forEach(item=>{
-    body.innerHTML+=`
+  const body =
+    document.getElementById('stockBody');
+
+  body.innerHTML = '';
+
+  data.forEach(item => {
+
+    body.innerHTML += `
       <tr>
         <td>${item.product}</td>
         <td>${item.quantity}</td>
@@ -131,50 +216,63 @@ async function loadStock(){
   });
 }
 
+// ADD STOCK
 async function addStock(){
-  const product=document.getElementById('stockProduct').value;
-  const qty=parseInt(document.getElementById('stockQty').value||0);
 
-  if(qty<=0) return alert('Enter quantity');
+  const product =
+    document.getElementById('stockProduct').value;
 
-  const {data,error}=await supabase
+  const qty =
+    parseInt(document.getElementById('stockQty').value || 0);
+
+  if(qty <= 0) return;
+
+  const { data } =
+    await supabase
+      .from('stock')
+      .select('*')
+      .eq('product', product)
+      .single();
+
+  await supabase
     .from('stock')
-    .select('*')
-    .eq('product',product)
-    .single();
+    .update({
+      quantity: data.quantity + qty
+    })
+    .eq('id', data.id);
 
-  if(error) return alert(error.message);
+  document.getElementById('stockQty').value = '';
 
-  const newQty=data.quantity + qty;
-
-  const {error:updateError}=await supabase
-    .from('stock')
-    .update({quantity:newQty})
-    .eq('id',data.id);
-
-  if(updateError) return alert(updateError.message);
-
-  document.getElementById('stockQty').value='';
   loadStock();
 }
 
+// LOAD ORDERS
 async function loadOrders(){
-  const {data,error}=await supabase
-    .from('orders')
-    .select('*')
-    .order('created_at',{ascending:false});
 
-  if(error) return alert(error.message);
+  const { data } =
+    await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending:false });
 
-  const body=document.getElementById('ordersBody');
-  body.innerHTML='';
+  const body =
+    document.getElementById('ordersBody');
 
-  data.forEach(order=>{
-    body.innerHTML+=`
+  body.innerHTML = '';
+
+  data.forEach(order => {
+
+    body.innerHTML += `
       <tr>
-        <td>${order.name}<br>${order.phone}</td>
-        <td>${order.items || order.item || ''}</td>
-        <td>${order.status || 'New'}</td>
+        <td>
+          <b>${order.name}</b><br>
+          ${order.phone}
+        </td>
+
+        <td>${order.items}</td>
+
+        <td>${order.status}</td>
+
         <td>
           <select onchange="updateStatus(${order.id}, this.value)">
             <option ${order.status==='New'?'selected':''}>New</option>
@@ -188,58 +286,17 @@ async function loadOrders(){
   });
 }
 
+// UPDATE STATUS
 async function updateStatus(id,status){
-  const {error}=await supabase
+
+  await supabase
     .from('orders')
-    .update({status})
-    .eq('id',id);
-
-  if(error) return alert(error.message);
-
-  // Auto reduce stock when completed
-  if(status==='Completed'){
-    const {data}=await supabase
-      .from('orders')
-      .select('*')
-      .eq('id',id)
-      .single();
-
-    const text=data.items || data.item || '';
-
-    const products=[
-      'Zip Polo Sweater',
-      'Jersey',
-      'Hoodie',
-      'T-Shirt',
-      'Sweatpants',
-      'Baggy Sweatpants'
-    ];
-
-    for(const product of products){
-      if(text.includes(product)){
-        const match=text.match(new RegExp(`(\\\\d+) x ${product}`));
-        const qty=match ? parseInt(match[1]) : 1;
-
-        const {data:stock}=await supabase
-          .from('stock')
-          .select('*')
-          .eq('product',product)
-          .single();
-
-        if(stock){
-          await supabase
-            .from('stock')
-            .update({quantity: Math.max(0, stock.quantity - qty)})
-            .eq('id',stock.id);
-        }
-      }
-    }
-
-    loadStock();
-  }
+    .update({ status })
+    .eq('id', id);
 
   loadOrders();
 }
 </script>
+
 </body>
 </html>
