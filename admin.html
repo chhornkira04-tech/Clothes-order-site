@@ -1,27 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HYY Admin</title>
   <style>
-    body{font-family:Arial;background:#111;color:#fff;padding:20px}
-    .box{background:#1c1c1c;padding:20px;border-radius:12px;max-width:900px;margin:auto}
-    input,button{padding:10px;margin:5px 0;width:100%;border:none;border-radius:8px}
-    button{background:#fff;color:#000;font-weight:bold;cursor:pointer}
-    table{width:100%;border-collapse:collapse;margin-top:15px}
-    th,td{border:1px solid #333;padding:8px}
+    body{
+      font-family:Arial,sans-serif;
+      background:#111;
+      color:white;
+      padding:20px;
+    }
+    .box{
+      background:#1c1c1c;
+      padding:20px;
+      border-radius:12px;
+      max-width:900px;
+      margin:auto;
+    }
+    input,button{
+      width:100%;
+      padding:10px;
+      margin:8px 0;
+      border:none;
+      border-radius:8px;
+    }
+    button{
+      background:white;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:15px;
+    }
+    th,td{
+      border:1px solid #333;
+      padding:8px;
+      text-align:left;
+    }
   </style>
 </head>
 <body>
 
 <div class="box" id="loginBox">
   <h2>HYY Admin Login</h2>
-  <input type="password" id="password" placeholder="Admin Password">
-  <button onclick="login()">Login</button>
+  <input type="password" id="password" placeholder="Enter Admin Password">
+  <button id="loginBtn">Log In</button>
   <p id="msg"></p>
 </div>
 
 <div class="box" id="panel" style="display:none">
   <h2>HYY Orders</h2>
+  <button id="logoutBtn">Logout</button>
+
   <table>
     <thead>
       <tr>
@@ -44,31 +78,39 @@ const supabase = window.supabase.createClient(
   "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH"
 );
 
-function login(){
-  const password=document.getElementById('password').value;
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const password = document.getElementById("password").value;
 
-  if(password!==ADMIN_PASSWORD){
-    document.getElementById('msg').innerText='Wrong password';
+  if(password !== ADMIN_PASSWORD){
+    document.getElementById("msg").innerText = "Wrong password";
     return;
   }
 
-  document.getElementById('loginBox').style.display='none';
-  document.getElementById('panel').style.display='block';
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("panel").style.display = "block";
+
   loadOrders();
-}
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  location.reload();
+});
 
 async function loadOrders(){
-  const {data,error}=await supabase.from('orders').select('*').order('created_at',{ascending:false});
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .order("created_at", { ascending:false });
 
   if(error){
     alert(error.message);
     return;
   }
 
-  const body=document.getElementById('orders');
-  body.innerHTML='';
+  const body = document.getElementById("orders");
+  body.innerHTML = "";
 
-  data.forEach(o=>{
+  data.forEach(o => {
     body.innerHTML += `
       <tr>
         <td>${o.name}</td>
