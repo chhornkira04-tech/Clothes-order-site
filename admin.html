@@ -1,300 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HYY Admin Panel</title>
-
+  <title>HYY Admin</title>
   <style>
-    body{
-      font-family:Arial,sans-serif;
-      background:#111;
-      color:white;
-      margin:0;
-      padding:20px;
-    }
-
-    .box{
-      background:#1c1c1c;
-      padding:20px;
-      border-radius:16px;
-      margin-bottom:20px;
-    }
-
-    input,select{
-      width:100%;
-      padding:10px;
-      margin:8px 0;
-      border:none;
-      border-radius:8px;
-    }
-
-    button{
-      background:white;
-      color:black;
-      border:none;
-      padding:10px 16px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:15px;
-    }
-
-    th,td{
-      border:1px solid #333;
-      padding:10px;
-      text-align:left;
-    }
-
-    th{background:#222;}
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
-
-    @media(max-width:768px){
-      .grid{grid-template-columns:1fr;}
-    }
+    body{font-family:Arial;background:#111;color:#fff;padding:20px}
+    .box{background:#1c1c1c;padding:20px;border-radius:12px;max-width:900px;margin:auto}
+    input,button{padding:10px;margin:5px 0;width:100%;border:none;border-radius:8px}
+    button{background:#fff;color:#000;font-weight:bold;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:15px}
+    th,td{border:1px solid #333;padding:8px}
   </style>
 </head>
-
 <body>
 
 <div class="box" id="loginBox">
   <h2>HYY Admin Login</h2>
-
-  <input type="email" id="email" placeholder="Admin Email">
-
-  <input type="password" id="password" placeholder="Password">
-
+  <input type="password" id="password" placeholder="Admin Password">
   <button onclick="login()">Login</button>
-
   <p id="msg"></p>
 </div>
 
-<div id="adminPanel" style="display:none;">
-
-  <div class="box">
-    <h1>HYY Clothing Admin</h1>
-
-    <button onclick="logout()">Logout</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="box">
-      <h2>Stock Management</h2>
-
-      <select id="stockProduct">
-        <option>Zip Polo Sweater</option>
-        <option>Jersey</option>
-        <option>Hoodie</option>
-        <option>T-Shirt</option>
-        <option>Sweatpants</option>
-        <option>Baggy Sweatpants</option>
-      </select>
-
-      <input type="number" id="stockQty" placeholder="Add Quantity">
-
-      <button onclick="addStock()">Add Stock</button>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Stock</th>
-          </tr>
-        </thead>
-
-        <tbody id="stockBody"></tbody>
-      </table>
-    </div>
-
-    <div class="box">
-      <h2>Orders</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Order</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody id="ordersBody"></tbody>
-      </table>
-    </div>
-
-  </div>
-
+<div class="box" id="panel" style="display:none">
+  <h2>HYY Orders</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Items</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="orders"></tbody>
+  </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-const SUPABASE_URL = "https://hfoebqodkfnbqksxnfmp.supabase.co";
-
-const SUPABASE_KEY = "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";
+const ADMIN_PASSWORD = "HYYADMIN2026";
 
 const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+  "https://hfoebqodkfnbqksxnfmp.supabase.co",
+  "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH"
 );
 
-// LOGIN
-async function login(){
+function login(){
+  const password=document.getElementById('password').value;
 
-  const email =
-    document.getElementById('email').value.trim();
-
-  const password =
-    document.getElementById('password').value;
-
-  const { error } =
-    await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-  if(error){
-
-    document.getElementById('msg').innerText =
-      error.message;
-
+  if(password!==ADMIN_PASSWORD){
+    document.getElementById('msg').innerText='Wrong password';
     return;
   }
 
-  document.getElementById('loginBox').style.display =
-    'none';
-
-  document.getElementById('adminPanel').style.display =
-    'block';
-
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('panel').style.display='block';
   loadOrders();
-  loadStock();
 }
 
-// LOGOUT
-async function logout(){
-
-  await supabase.auth.signOut();
-
-  location.reload();
-}
-
-// LOAD STOCK
-async function loadStock(){
-
-  const { data } =
-    await supabase
-      .from('stock')
-      .select('*')
-      .order('product');
-
-  const body =
-    document.getElementById('stockBody');
-
-  body.innerHTML = '';
-
-  data.forEach(item => {
-
-    body.innerHTML += `
-      <tr>
-        <td>${item.product}</td>
-        <td>${item.quantity}</td>
-      </tr>
-    `;
-  });
-}
-
-// ADD STOCK
-async function addStock(){
-
-  const product =
-    document.getElementById('stockProduct').value;
-
-  const qty =
-    parseInt(document.getElementById('stockQty').value || 0);
-
-  if(qty <= 0) return;
-
-  const { data } =
-    await supabase
-      .from('stock')
-      .select('*')
-      .eq('product', product)
-      .single();
-
-  await supabase
-    .from('stock')
-    .update({
-      quantity: data.quantity + qty
-    })
-    .eq('id', data.id);
-
-  document.getElementById('stockQty').value = '';
-
-  loadStock();
-}
-
-// LOAD ORDERS
 async function loadOrders(){
+  const {data,error}=await supabase.from('orders').select('*').order('created_at',{ascending:false});
 
-  const { data } =
-    await supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending:false });
+  if(error){
+    alert(error.message);
+    return;
+  }
 
-  const body =
-    document.getElementById('ordersBody');
+  const body=document.getElementById('orders');
+  body.innerHTML='';
 
-  body.innerHTML = '';
-
-  data.forEach(order => {
-
+  data.forEach(o=>{
     body.innerHTML += `
       <tr>
-        <td>
-          <b>${order.name}</b><br>
-          ${order.phone}
-        </td>
-
-        <td>${order.items}</td>
-
-        <td>${order.status}</td>
-
-        <td>
-          <select onchange="updateStatus(${order.id}, this.value)">
-            <option ${order.status==='New'?'selected':''}>New</option>
-            <option ${order.status==='Packing'?'selected':''}>Packing</option>
-            <option ${order.status==='Shipped'?'selected':''}>Shipped</option>
-            <option ${order.status==='Completed'?'selected':''}>Completed</option>
-          </select>
-        </td>
+        <td>${o.name}</td>
+        <td>${o.phone}</td>
+        <td>${o.items}</td>
+        <td>${o.status}</td>
       </tr>
     `;
   });
-}
-
-// UPDATE STATUS
-async function updateStatus(id,status){
-
-  await supabase
-    .from('orders')
-    .update({ status })
-    .eq('id', id);
-
-  loadOrders();
 }
 </script>
 
