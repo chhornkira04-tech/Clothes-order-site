@@ -1,460 +1,245 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HYY Clothing Admin</title>
 
-    <title>Admin Panel</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            padding: 30px;
-            margin: 0;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        .login-box,
-        .admin-box {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .login-box {
-            max-width: 400px;
-            margin: 50px auto;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 18px;
-            border: none;
-            border-radius: 6px;
-            background: #222;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #444;
-        }
-
-        .logout {
-            background: #c62828;
-            margin-bottom: 20px;
-        }
-
-        .logout:hover {
-            background: #a51f1f;
-        }
-
-        #message {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .orders {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th {
-            background: #222;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-
-        .status {
-            font-weight: bold;
-        }
-
-        .no-orders {
-            text-align: center;
-            padding: 25px;
-        }
-
-        .error {
-            color: #c62828;
-        }
-
-        .success {
-            color: #2e7d32;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 25px;
-        }
-    </style>
+  <style>
+    body{font-family:Arial,sans-serif;background:#111;color:#fff;margin:0;padding:20px;}
+    .box{background:#1c1c1c;padding:20px;border-radius:16px;margin-bottom:20px;}
+    input,select{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;}
+    button{background:#fff;color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold;}
+    button:hover{background:#ddd;}
+    table{width:100%;border-collapse:collapse;margin-top:15px;}
+    th,td{border:1px solid #333;padding:10px;text-align:left;}
+    th{background:#222;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    @media(max-width:768px){.grid{grid-template-columns:1fr;}}
+  </style>
 </head>
-
 <body>
 
-    <!-- LOGIN -->
-    <div class="login-box" id="loginSection">
+<div class="box" id="loginBox">
+  <h2>Admin Login</h2>
+  <input type="email" id="email" placeholder="Admin Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="loginMsg"></p>
+</div>
 
-        <h1>Admin Login</h1>
+<div id="adminPanel" style="display:none;">
 
-        <form id="loginForm">
+  <div class="box">
+    <h1>HYY Clothing Admin</h1>
+    <button onclick="logout()">Logout</button>
+  </div>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Admin email"
-                required
-            >
+  <div class="grid">
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                required
-            >
+    <div class="box">
+      <h2>Stock Management</h2>
 
-            <button type="submit">
-                Login
-            </button>
+      <select id="stockProduct">
+        <option>Zip Polo Sweater</option>
+        <option>Jersey</option>
+        <option>Hoodie</option>
+        <option>T-Shirt</option>
+        <option>Sweatpants</option>
+        <option>Baggy Sweatpants</option>
+      </select>
 
-        </form>
+      <input type="number" id="stockQty" placeholder="Add Quantity">
 
-        <div id="loginMessage"></div>
+      <button onclick="addStock()">Add Stock</button>
 
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody id="stockBody"></tbody>
+      </table>
     </div>
 
+    <div class="box">
+      <h2>Orders</h2>
 
-    <!-- ADMIN PANEL -->
-    <div class="container" id="adminSection" style="display: none;">
-
-        <div class="admin-box">
-
-            <h1>Admin Panel</h1>
-
-            <p>
-                Logged in as:
-                <strong id="adminEmail"></strong>
-            </p>
-
-            <button class="logout" id="logoutButton">
-                Logout
-            </button>
-
-            <h2>Customer Orders</h2>
-
-            <div id="ordersMessage" class="loading">
-                Loading orders...
-            </div>
-
-            <div class="orders">
-
-                <table id="ordersTable" style="display: none;">
-
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Order</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="ordersBody"></tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Order</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
     </div>
 
-
-    <!-- SUPABASE -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script>
-
-        const SUPABASE_URL =
-            "https://ceuuxzxcvprvqfgvylnc.supabase.co";
-
-
-        // IMPORTANT:
-        // Put the SAME Publishable key here
-        // that you used when your login started working.
-
-        const SUPABASE_KEY =
-            "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
-
-
-        const supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
-
-
-        // =========================
-        // LOGIN
-        // =========================
-
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", async function(event) {
-
-                event.preventDefault();
-
-                const email =
-                    document.getElementById("email").value.trim();
-
-                const password =
-                    document.getElementById("password").value;
-
-                const message =
-                    document.getElementById("loginMessage");
-
-
-                message.textContent = "Logging in...";
-                message.className = "";
-
-
-                const { data, error } =
-                    await supabaseClient.auth.signInWithPassword({
-                        email: email,
-                        password: password
-                    });
-
-
-                if (error) {
-
-                    message.textContent =
-                        "Login failed: " + error.message;
-
-                    message.className = "error";
-
-                    return;
-                }
-
-
-                // Show admin panel
-                document
-                    .getElementById("loginSection")
-                    .style.display = "none";
-
-                document
-                    .getElementById("adminSection")
-                    .style.display = "block";
-
-
-                document
-                    .getElementById("adminEmail")
-                    .textContent = email;
-
-
-                // Load customer orders
-                loadOrders();
-
-            });
-
-
-        // =========================
-        // LOAD ORDERS
-        // =========================
-
-        async function loadOrders() {
-
-            const ordersMessage =
-                document.getElementById("ordersMessage");
-
-            const ordersTable =
-                document.getElementById("ordersTable");
-
-            const ordersBody =
-                document.getElementById("ordersBody");
-
-
-            ordersMessage.textContent =
-                "Loading orders...";
-
-            ordersMessage.className = "loading";
-
-            ordersTable.style.display = "none";
-
-
-            const { data, error } =
-                await supabaseClient
-                    .from("orders")
-                    .select("*")
-                    .order("created_at", {
-                        ascending: false
-                    });
-
-
-            if (error) {
-
-                console.error(error);
-
-                ordersMessage.textContent =
-                    "Could not load orders: " +
-                    error.message;
-
-                ordersMessage.className = "error";
-
-                return;
-            }
-
-
-            // No orders
-            if (!data || data.length === 0) {
-
-                ordersMessage.textContent =
-                    "No orders yet.";
-
-                ordersMessage.className =
-                    "no-orders";
-
-                return;
-            }
-
-
-            // Clear old rows
-            ordersBody.innerHTML = "";
-
-
-            // Add orders
-            data.forEach(function(order) {
-
-                const row =
-                    document.createElement("tr");
-
-
-                const date =
-                    order.created_at
-                        ? new Date(order.created_at)
-                            .toLocaleString()
-                        : "";
-
-
-                row.innerHTML = `
-
-                    <td>${escapeHTML(order.name || "")}</td>
-
-                    <td>${escapeHTML(order.phone || "")}</td>
-
-                    <td>${escapeHTML(order.address || "")}</td>
-
-                    <td>${escapeHTML(order.item || "")}</td>
-
-                    <td class="status">
-                        ${escapeHTML(order.status || "New")}
-                    </td>
-
-                    <td>${escapeHTML(date)}</td>
-
-                `;
-
-
-                ordersBody.appendChild(row);
-
-            });
-
-
-            ordersMessage.textContent =
-                data.length + " order(s) found.";
-
-            ordersMessage.className = "success";
-
-
-            ordersTable.style.display = "table";
-
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://ceuuxzxcvprvqfgvylnc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function login(){
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+
+  const {error}=await supabase.auth.signInWithPassword({email,password});
+
+  if(error){
+    document.getElementById('loginMsg').innerText=error.message;
+    return;
+  }
+
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('adminPanel').style.display='block';
+
+  loadOrders();
+  loadStock();
+}
+
+async function logout(){
+  await supabase.auth.signOut();
+  location.reload();
+}
+
+async function loadStock(){
+  const {data,error}=await supabase.from('stock').select('*').order('product');
+  if(error) return alert(error.message);
+
+  const body=document.getElementById('stockBody');
+  body.innerHTML='';
+
+  data.forEach(item=>{
+    body.innerHTML+=`
+      <tr>
+        <td>${item.product}</td>
+        <td>${item.quantity}</td>
+      </tr>
+    `;
+  });
+}
+
+async function addStock(){
+  const product=document.getElementById('stockProduct').value;
+  const qty=parseInt(document.getElementById('stockQty').value||0);
+
+  if(qty<=0) return alert('Enter quantity');
+
+  const {data,error}=await supabase
+    .from('stock')
+    .select('*')
+    .eq('product',product)
+    .single();
+
+  if(error) return alert(error.message);
+
+  const newQty=data.quantity + qty;
+
+  const {error:updateError}=await supabase
+    .from('stock')
+    .update({quantity:newQty})
+    .eq('id',data.id);
+
+  if(updateError) return alert(updateError.message);
+
+  document.getElementById('stockQty').value='';
+  loadStock();
+}
+
+async function loadOrders(){
+  const {data,error}=await supabase
+    .from('orders')
+    .select('*')
+    .order('created_at',{ascending:false});
+
+  if(error) return alert(error.message);
+
+  const body=document.getElementById('ordersBody');
+  body.innerHTML='';
+
+  data.forEach(order=>{
+    body.innerHTML+=`
+      <tr>
+        <td>${order.name}<br>${order.phone}</td>
+        <td>${order.items || order.item || ''}</td>
+        <td>${order.status || 'New'}</td>
+        <td>
+          <select onchange="updateStatus(${order.id}, this.value)">
+            <option ${order.status==='New'?'selected':''}>New</option>
+            <option ${order.status==='Packing'?'selected':''}>Packing</option>
+            <option ${order.status==='Shipped'?'selected':''}>Shipped</option>
+            <option ${order.status==='Completed'?'selected':''}>Completed</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function updateStatus(id,status){
+  const {error}=await supabase
+    .from('orders')
+    .update({status})
+    .eq('id',id);
+
+  if(error) return alert(error.message);
+
+  // Auto reduce stock when completed
+  if(status==='Completed'){
+    const {data}=await supabase
+      .from('orders')
+      .select('*')
+      .eq('id',id)
+      .single();
+
+    const text=data.items || data.item || '';
+
+    const products=[
+      'Zip Polo Sweater',
+      'Jersey',
+      'Hoodie',
+      'T-Shirt',
+      'Sweatpants',
+      'Baggy Sweatpants'
+    ];
+
+    for(const product of products){
+      if(text.includes(product)){
+        const match=text.match(new RegExp(`(\\\\d+) x ${product}`));
+        const qty=match ? parseInt(match[1]) : 1;
+
+        const {data:stock}=await supabase
+          .from('stock')
+          .select('*')
+          .eq('product',product)
+          .single();
+
+        if(stock){
+          await supabase
+            .from('stock')
+            .update({quantity: Math.max(0, stock.quantity - qty)})
+            .eq('id',stock.id);
         }
+      }
+    }
 
+    loadStock();
+  }
 
-        // =========================
-        // SECURITY HELPER
-        // =========================
-
-        function escapeHTML(value) {
-
-            const div =
-                document.createElement("div");
-
-            div.textContent = value;
-
-            return div.innerHTML;
-        }
-
-
-        // =========================
-        // LOGOUT
-        // =========================
-
-        document
-            .getElementById("logoutButton")
-            .addEventListener("click", async function() {
-
-                await supabaseClient.auth.signOut();
-
-                document
-                    .getElementById("adminSection")
-                    .style.display = "none";
-
-                document
-                    .getElementById("loginSection")
-                    .style.display = "block";
-
-                document
-                    .getElementById("loginForm")
-                    .reset();
-
-                document
-                    .getElementById("loginMessage")
-                    .textContent = "";
-
-            });
-
-    </script>
-
+  loadOrders();
+}
+</script>
 </body>
 </html>
-```
