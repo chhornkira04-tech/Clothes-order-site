@@ -398,10 +398,16 @@
 
   let total=0;
 
-  cart.forEach((item,index)=>{
-    total+=item.price*item.qty;
+ function renderCart() {
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
 
-    container.innerHTML+=`
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    container.innerHTML += `
       <div class="cart-item">
         <div>
           <strong>${item.name}</strong><br>
@@ -409,19 +415,10 @@
         </div>
 
         <div style="text-align:right">
-          <div>$${(item.price*item.qty).toFixed(2)}</div>
+          <div>$${(item.price * item.qty).toFixed(2)}</div>
 
-          <button
-            onclick="removeFromCart(${index})"
-            style="
-              margin-top:5px;
-              background:red;
-              color:white;
-              border:none;
-              padding:5px 10px;
-              border-radius:6px;
-              cursor:pointer;
-            ">
+          <button onclick="removeFromCart(${index})"
+            style="background:red;color:white;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;margin-top:5px;">
             Remove
           </button>
         </div>
@@ -429,14 +426,13 @@
     `;
   });
 
-  document.getElementById("cartTotal").innerText=`Total: $${total.toFixed(2)}`;
+  document.getElementById("cartTotal").innerText = `Total: $${total.toFixed(2)}`;
 }
 
-function removeFromCart(index){
-  cart.splice(index,1);
+function removeFromCart(index) {
+  cart.splice(index, 1);
   renderCart();
 }
-    }
 
     async function sendOrder(){
       if(cart.length===0){
