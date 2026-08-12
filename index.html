@@ -362,12 +362,23 @@
     </div>
   </section>
 
-  <footer>
-    <p>Instagram: <a href="https://instagram.com/hyyclothing" target="_blank">@hyyclothing</a></p>
-    <p>Telegram Support: <a href="https://t.me/HYYClothing_bot" target="_blank">@HYYClothing_bot</a></p>
-    <p style="margin-top:10px">© 2026 HYY Clothing</p>
-  </footer>
+<footer>
+  <p>
+    Telegram Support:
+    <a href="https://t.me/HYYClothing_bot" target="_blank">
+      @HYYClothing_bot
+    </a>
+  </p>
 
+  <p>
+    Facebook:
+    <a href="https://www.facebook.com/share/1CwfANtfbS/?mibextid=wwXIfr" target="_blank">
+      HYY Clothing Facebook Page
+    </a>
+  </p>
+
+  <p style="margin-top:10px">© 2026 HYY Clothing</p>
+</footer>
   <script>
     const SUPABASE_URL = "https://ceuuxzxcvprvqfgvylnc.supabase.co";
     const SUPABASE_KEY = "sb_publishable_7io7wwW8xNalOoLdOGamSw_WZ827mjb";
@@ -381,35 +392,50 @@
       el.innerText=value;
     }
 
-    function addToCart(name,price,colorId,qtyId){
-      const color=document.getElementById(colorId).value;
-      const qty=parseInt(document.getElementById(qtyId).innerText);
-
-      cart.push({name,price,color,qty});
-      renderCart();
-    }
-
     function renderCart(){
-      const container=document.getElementById("cartItems");
-      container.innerHTML="";
+  const container=document.getElementById("cartItems");
+  container.innerHTML="";
 
-      let total=0;
+  let total=0;
 
-      cart.forEach(item=>{
-        total+=item.price*item.qty;
+  cart.forEach((item,index)=>{
+    total+=item.price*item.qty;
 
-        container.innerHTML+=`
-          <div class="cart-item">
-            <div>
-              <strong>${item.name}</strong><br>
-              Color: ${item.color} × ${item.qty}
-            </div>
-            <div>$${(item.price*item.qty).toFixed(2)}</div>
-          </div>
-        `;
-      });
+    container.innerHTML+=`
+      <div class="cart-item">
+        <div>
+          <strong>${item.name}</strong><br>
+          Color: ${item.color} × ${item.qty}
+        </div>
 
-      document.getElementById("cartTotal").innerText=`Total: $${total.toFixed(2)}`;
+        <div style="text-align:right">
+          <div>$${(item.price*item.qty).toFixed(2)}</div>
+
+          <button
+            onclick="removeFromCart(${index})"
+            style="
+              margin-top:5px;
+              background:red;
+              color:white;
+              border:none;
+              padding:5px 10px;
+              border-radius:6px;
+              cursor:pointer;
+            ">
+            Remove
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("cartTotal").innerText=`Total: $${total.toFixed(2)}`;
+}
+
+function removeFromCart(index){
+  cart.splice(index,1);
+  renderCart();
+}
     }
 
     async function sendOrder(){
