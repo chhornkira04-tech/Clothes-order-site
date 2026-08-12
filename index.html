@@ -201,61 +201,142 @@
 
     <div class="products">
 
-      <div class="card">
-        <img src="zip-polo.jpg" alt="Zip Polo Sweater">
-        <div class="card-body">
-          <h3>Zip Polo Sweater</h3>
-          <p class="price">$8.50</p>
-          <p>Free Size • 55kg–80kg</p>
+  <!-- 1. Zip Polo Sweater -->
+  <div class="card">
+    <img src="zip-polo.jpg" alt="Zip Polo Sweater">
+    <div class="card-body">
+      <h3>Zip Polo Sweater</h3>
+      <p class="price">$8.50</p>
+      <p>Free Size • 55kg–80kg</p>
 
-          <select id="color1">
-            <option>Black</option>
-            <option>White</option>
-          </select>
+      <select id="color1">
+        <option>Black</option>
+        <option>White</option>
+      </select>
 
-          <div class="qty">
-            <button onclick="changeQty('qty1',-1)">-</button>
-            <span id="qty1">1</span>
-            <button onclick="changeQty('qty1',1)">+</button>
-          </div>
-
-          <button class="btn" onclick="addToCart('Zip Polo Sweater',8.5,'color1','qty1')">Add to Cart</button>
-        </div>
+      <div class="qty">
+        <button onclick="changeQty('qty1',-1)">-</button>
+        <span id="qty1">1</span>
+        <button onclick="changeQty('qty1',1)">+</button>
       </div>
 
-      <div class="card">
-        <img src="tshirt.jpg" alt="T-Shirt">
-        <div class="card-body">
-          <h3>T-Shirt</h3>
-          <p class="price">$5.00</p>
-          <p>Free Size</p>
+      <button class="btn" onclick="addToCart('Zip Polo Sweater',8.5,'color1','qty1')">Add to Cart</button>
+    </div>
+  </div>
 
-          <select id="color2">
-            <option>Black</option>
-            <option>Gray</option>
-          </select>
+  <!-- 2. Jersey -->
+  <div class="card">
+    <img src="jersey.jpg" alt="Jersey">
+    <div class="card-body">
+      <h3>Jersey</h3>
+      <p class="price">$6.50</p>
+      <p>Free Size</p>
 
-          <div class="qty">
-            <button onclick="changeQty('qty2',-1)">-</button>
-            <span id="qty2">1</span>
-            <button onclick="changeQty('qty2',1)">+</button>
-          </div>
+      <select id="color2">
+        <option>Black</option>
+      </select>
 
-          <button class="btn" onclick="addToCart('T-Shirt',5,'color2','qty2')">Add to Cart</button>
-        </div>
+      <div class="qty">
+        <button onclick="changeQty('qty2',-1)">-</button>
+        <span id="qty2">1</span>
+        <button onclick="changeQty('qty2',1)">+</button>
       </div>
 
-      <div class="card">
-        <img src="hoodie.jpg" alt="Hoodie">
-        <div class="card-body">
-          <h3>Hoodie</h3>
-          <p class="price">$10.00</p>
-          <p>Free Size</p>
+      <button class="btn" onclick="addToCart('Jersey',6.5,'color2','qty2')">Add to Cart</button>
+    </div>
+  </div>
 
-          <select id="color3">
-            <option>Black</option>
-          </select>
+  <!-- 3. Hoodie -->
+  <div class="card">
+    <img src="hoodie.jpg" alt="Hoodie">
+    <div class="card-body">
+      <h3>Hoodie</h3>
+      <p class="price">$10.00</p>
+      <p>Free Size</p>
 
+      <select id="color3">
+        <option>Black</option>
+      </select>
+
+      <div class="qty">
+        <button onclick="changeQty('qty3',-1)">-</button>
+        <span id="qty3">1</span>
+        <button onclick="changeQty('qty3',1)">+</button>
+      </div>
+
+      <button class="btn" onclick="addToCart('Hoodie',10,'color3','qty3')">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- 4. T-Shirt -->
+  <div class="card">
+    <img src="tshirt.jpg" alt="T-Shirt">
+    <div class="card-body">
+      <h3>T-Shirt</h3>
+      <p class="price">$5.00</p>
+      <p>Free Size</p>
+
+      <select id="color4">
+        <option>Black</option>
+        <option>Gray</option>
+      </select>
+
+      <div class="qty">
+        <button onclick="changeQty('qty4',-1)">-</button>
+        <span id="qty4">1</span>
+        <button onclick="changeQty('qty4',1)">+</button>
+      </div>
+
+      <button class="btn" onclick="addToCart('T-Shirt',5,'color4','qty4')">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- 5. Sweatpants -->
+  <div class="card">
+    <img src="sweatpants.jpg" alt="Sweatpants">
+    <div class="card-body">
+      <h3>Sweatpants</h3>
+      <p class="price">$10.00</p>
+      <p>Free Size</p>
+
+      <select id="color5">
+        <option>Black</option>
+        <option>Gray</option>
+      </select>
+
+      <div class="qty">
+        <button onclick="changeQty('qty5',-1)">-</button>
+        <span id="qty5">1</span>
+        <button onclick="changeQty('qty5',1)">+</button>
+      </div>
+
+      <button class="btn" onclick="addToCart('Sweatpants',10,'color5','qty5')">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- 6. Baggy Sweatpants -->
+  <div class="card">
+    <img src="baggy-sweatpants.jpg" alt="Baggy Sweatpants">
+    <div class="card-body">
+      <h3>Baggy Sweatpants</h3>
+      <p class="price">$5.00</p>
+      <p>Free Size</p>
+
+      <select id="color6">
+        <option>Black</option>
+      </select>
+
+      <div class="qty">
+        <button onclick="changeQty('qty6',-1)">-</button>
+        <span id="qty6">1</span>
+        <button onclick="changeQty('qty6',1)">+</button>
+      </div>
+
+      <button class="btn" onclick="addToCart('Baggy Sweatpants',5,'color6','qty6')">Add to Cart</button>
+    </div>
+  </div>
+
+</div>
           <div class="qty">
             <button onclick="changeQty('qty3',-1)">-</button>
             <span id="qty3">1</span>
