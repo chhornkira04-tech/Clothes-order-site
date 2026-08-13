@@ -1,12 +1,10 @@
-## Fixed `admin2.html`
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HYY Clothing — Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>HYY Clothing - Admin</title>
 
   <style>
     * {
@@ -17,427 +15,1682 @@
     }
 
     body {
-      background: #f5f5f5;
+      background: #f4f4f4;
       color: #111;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginPage {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
+      background: #111;
     }
 
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    .login-box,
-    .admin-box {
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,.08);
-    }
-
-    input {
+    .login-box {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      max-width: 400px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      text-align: center;
+    }
+
+    .login-box h1 {
+      margin-bottom: 10px;
+    }
+
+    .login-box p {
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 14px;
       border: 1px solid #ddd;
       border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
     }
 
-    button {
-      background: black;
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background: #333;
+    }
+
+    #loginError {
+      color: red;
+      margin-top: 15px;
+      display: none;
+    }
+
+    /* =========================
+       ADMIN
+    ========================= */
+
+    #adminPage {
+      display: none;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 22px;
+    }
+
+    .logout-btn {
+      background: #fff;
+      color: #111;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    /* =========================
+       DASHBOARD CARDS
+    ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      border-radius: 15px;
+      padding: 22px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .stat h3 {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .stat strong {
+      font-size: 30px;
+    }
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    .section {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-size: 21px;
+    }
+
+    .refresh-btn {
+      background: #111;
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-right: 5px;
-      margin-top: 5px;
     }
 
-    button:hover {
-      background: #333;
+    /* =========================
+       STOCK
+    ========================= */
+
+    .stock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .stock-card {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .stock-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .stock-number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .low-stock {
+      color: #d00;
+    }
+
+    .stock-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .stock-actions button {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .add-btn {
+      background: #16803c;
+    }
+
+    .draw-btn {
+      background: #d33;
+    }
+
+    /* =========================
+       ORDERS TABLE
+    ========================= */
+
+    .table-wrapper {
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      min-width: 800px;
     }
 
     th,
     td {
-      border-bottom: 1px solid #eee;
-      padding: 12px;
       text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
     }
 
-    .hidden {
+    th {
+      background: #fafafa;
+    }
+
+    .status {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .status-new {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-confirmed {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .status-delivered {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .order-actions button {
+      border: none;
+      padding: 7px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      color: white;
+      font-size: 12px;
+    }
+
+    .confirm-btn {
+      background: #16803c;
+    }
+
+    .cancel-btn {
+      background: #d33;
+    }
+
+    /* =========================
+       HISTORY
+    ========================= */
+
+    .history-table {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    #stockModal {
       display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
 
-    .stock-form {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #eee;
+    .modal {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
     }
 
-    .logout-btn {
-      float: right;
-      background: crimson;
+    .modal h2 {
+      margin-bottom: 15px;
     }
 
-    .logout-btn:hover {
-      background: #a30025;
+    .modal input,
+    .modal select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 9px;
+      margin-bottom: 12px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .save-stock {
+      background: #111;
+      color: white;
+    }
+
+    .close-modal {
+      background: #ddd;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stock-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 15px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stock-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 15px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- LOGIN -->
-  <div class="login-box" id="loginBox">
-    <h1>Admin Login</h1>
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
 
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
+<div id="loginPage">
 
-    <button onclick="login()">Log In</button>
-  </div>
+  <div class="login-box">
 
-  <!-- ADMIN PANEL -->
-  <div class="admin-box hidden" id="adminBox">
+    <h1>HYY Clothing</h1>
 
-    <button class="logout-btn" onclick="logout()">
-      Log Out
+    <p>Admin Dashboard</p>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin email"
+      autocomplete="username"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button class="login-btn" onclick="login()">
+      Login
     </button>
 
-    <h1>HYY Clothing — Stock Management</h1>
+    <div id="loginError"></div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+  </div>
 
-      <tbody id="stockBody"></tbody>
-    </table>
+</div>
 
-    <!-- ADD NEW PRODUCT -->
-    <div class="stock-form">
-      <h2>Add New Product</h2>
 
-      <input
-        type="text"
-        id="newProduct"
-        placeholder="Product Name"
-      />
+<!-- =====================================================
+     ADMIN PAGE
+===================================================== -->
 
-      <input
-        type="number"
-        id="newQty"
-        placeholder="Starting Quantity"
-      />
+<div id="adminPage">
 
-      <button onclick="addProduct()">
-        Add Product
+  <header>
+
+    <h1>HYY Clothing Admin</h1>
+
+    <button class="logout-btn" onclick="logout()">
+      Logout
+    </button>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================= -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <h3>Total Orders</h3>
+        <strong id="totalOrders">0</strong>
+      </div>
+
+      <div class="stat">
+        <h3>New Orders</h3>
+        <strong id="newOrders">0</strong>
+      </div>
+
+      <div class="stat">
+        <h3>Products</h3>
+        <strong id="totalProducts">0</strong>
+      </div>
+
+      <div class="stat">
+        <h3>Low Stock</h3>
+        <strong id="lowStock">0</strong>
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         STOCK
+    ========================= -->
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <h2>📦 Stock</h2>
+
+        <button
+          class="refresh-btn"
+          onclick="loadEverything()"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+      <div
+        class="stock-grid"
+        id="stockContainer"
+      ></div>
+
+    </div>
+
+
+    <!-- =========================
+         ORDERS
+    ========================= -->
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <h2>📋 Customer Orders</h2>
+
+      </div>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+
+              <th>Customer</th>
+
+              <th>Phone</th>
+
+              <th>Address</th>
+
+              <th>Items</th>
+
+              <th>Total</th>
+
+              <th>Status</th>
+
+              <th>Date</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="ordersTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         HISTORY
+    ========================= -->
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <h2>📜 Stock History</h2>
+
+      </div>
+
+      <div class="table-wrapper history-table">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Product</th>
+
+              <th>Change</th>
+
+              <th>Reason</th>
+
+              <th>Order</th>
+
+              <th>Date</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="historyTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+</div>
+
+
+<!-- =====================================================
+     STOCK MODAL
+===================================================== -->
+
+<div id="stockModal">
+
+  <div class="modal">
+
+    <h2 id="modalTitle">
+      Adjust Stock
+    </h2>
+
+    <p id="modalProduct"></p>
+
+    <br>
+
+    <input
+      type="number"
+      id="stockAmount"
+      min="1"
+      placeholder="Quantity"
+    >
+
+    <input
+      type="text"
+      id="stockReason"
+      placeholder="Reason"
+    >
+
+    <div class="modal-buttons">
+
+      <button
+        class="save-stock"
+        onclick="saveStock()"
+      >
+        Save
       </button>
+
+      <button
+        class="close-modal"
+        onclick="closeModal()"
+      >
+        Cancel
+      </button>
+
     </div>
 
   </div>
 
-  <script>
-
-    // SUPABASE CONFIG
-    const SUPABASE_URL =
-      "https://hfoebqodkfnbqksxnfmp.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";
+</div>
 
 
-    // SIMPLE LOGIN
-    function login() {
+<script>
 
-      const user =
-        document.getElementById("username").value.trim();
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-      const pass =
-        document.getElementById("password").value.trim();
+const SUPABASE_URL =
+  "https://hfoebqodkfnbqksxnfmp.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";
 
 
-      // CHANGE THESE IF YOU WANT
-      if (user === "admin" && pass === "1234") {
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-        localStorage.setItem("adminLoggedIn", "true");
+let currentProductId = null;
 
-        showAdmin();
+let currentAdjustment = 0;
 
-      } else {
+let session = null;
 
-        alert("Wrong username or password");
+
+/* =====================================================
+   SUPABASE REQUEST HELPER
+===================================================== */
+
+async function supabaseRequest(
+  endpoint,
+  options = {}
+) {
+
+  const response = await fetch(
+    `${SUPABASE_URL}${endpoint}`,
+    {
+
+      ...options,
+
+      headers: {
+
+        "Content-Type":
+          "application/json",
+
+        "apikey":
+          SUPABASE_KEY,
+
+        ...(session
+          ? {
+              "Authorization":
+                `Bearer ${session.access_token}`
+            }
+          : {}),
+
+        ...(options.headers || {})
 
       }
+
     }
+  );
 
 
-    function logout() {
+  if (!response.ok) {
 
-      localStorage.removeItem("adminLoggedIn");
+    const errorText =
+      await response.text();
 
-      location.reload();
-    }
+    throw new Error(errorText);
 
-
-    function showAdmin() {
-
-      document.getElementById("loginBox").classList.add("hidden");
-
-      document.getElementById("adminBox").classList.remove("hidden");
-
-      loadStock();
-    }
+  }
 
 
-    // LOAD STOCK
-    async function loadStock() {
+  const text =
+    await response.text();
 
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/stock?select=*`,
+  return text
+    ? JSON.parse(text)
+    : null;
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+
+  const error =
+    document.getElementById("loginError");
+
+
+  error.style.display = "none";
+
+
+  if (!email || !password) {
+
+    error.innerText =
+      "Please enter your email and password.";
+
+    error.style.display = "block";
+
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
         {
-          headers: {
-            "apikey": SUPABASE_KEY
-          }
-        }
-      );
 
-      const data = await res.json();
-
-      const body = document.getElementById("stockBody");
-
-      body.innerHTML = "";
-
-
-      data.forEach(item => {
-
-        body.innerHTML += `
-          <tr>
-            <td>${item.id}</td>
-            <td>${item.product}</td>
-            <td>${item.quantity}</td>
-            <td>
-              <button onclick="addStock(${item.id}, ${item.quantity})">
-                Add Stock
-              </button>
-
-              <button onclick="drawStock(${item.id}, ${item.quantity})">
-                Draw Stock
-              </button>
-
-              <button
-                style="background:red"
-                onclick="deleteProduct(${item.id})"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-
-    // ADD STOCK
-    async function addStock(id, currentQty) {
-
-      const amount = parseInt(prompt("Add quantity:"));
-
-      if (!amount || amount <= 0) return;
-
-      const newQuantity = currentQty + amount;
-
-
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/stock?id=eq.${id}`,
-        {
-          method: "PATCH",
-
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
-          },
-
-          body: JSON.stringify({
-            quantity: newQuantity
-          })
-        }
-      );
-
-
-      if (!res.ok) {
-
-        alert("Failed to update stock");
-
-        return;
-      }
-
-
-      alert("Stock updated successfully!");
-
-      loadStock();
-    }
-
-
-    // DRAW STOCK
-    async function drawStock(id, currentQty) {
-
-      const amount = parseInt(prompt("Draw quantity:"));
-
-      if (!amount || amount <= 0) return;
-
-      if (amount > currentQty) {
-
-        alert("Not enough stock");
-
-        return;
-      }
-
-      const newQuantity = currentQty - amount;
-
-
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/stock?id=eq.${id}`,
-        {
-          method: "PATCH",
-
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
-          },
-
-          body: JSON.stringify({
-            quantity: newQuantity
-          })
-        }
-      );
-
-
-      if (!res.ok) {
-
-        alert("Failed to draw stock");
-
-        return;
-      }
-
-
-      alert("Stock updated successfully!");
-
-      loadStock();
-    }
-
-
-    // ADD NEW PRODUCT
-    async function addProduct() {
-
-      const product =
-        document.getElementById("newProduct").value.trim();
-
-      const quantity =
-        parseInt(document.getElementById("newQty").value);
-
-
-      if (!product || isNaN(quantity)) {
-
-        alert("Please fill all fields");
-
-        return;
-      }
-
-
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/stock`,
-        {
           method: "POST",
 
           headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY
+
           },
 
           body: JSON.stringify({
-            product: product,
-            quantity: quantity
+
+            email: email,
+
+            password: password
+
           })
+
         }
       );
 
 
-      if (!res.ok) {
-
-        alert("Failed to add product");
-
-        return;
-      }
+    const data =
+      await response.json();
 
 
-      document.getElementById("newProduct").value = "";
-      document.getElementById("newQty").value = "";
+    if (!response.ok) {
 
+      throw new Error(
+        data.error_description ||
+        data.msg ||
+        "Login failed"
+      );
 
-      alert("Product added successfully!");
-
-      loadStock();
     }
 
 
-    // DELETE PRODUCT
-    async function deleteProduct(id) {
-
-      if (!confirm("Delete this product?")) return;
+    session = data;
 
 
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/stock?id=eq.${id}`,
-        {
-          method: "DELETE",
+    /*
+      Check whether this account
+      is actually an HYY admin.
+    */
 
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
+    const admin =
+      await supabaseRequest(
+        `/rest/v1/admin_users?user_id=eq.${data.user.id}&select=user_id`
+      );
+
+
+    if (!admin || admin.length === 0) {
+
+      session = null;
+
+      throw new Error(
+        "This account is not an HYY Clothing admin."
+      );
+
+    }
+
+
+    localStorage.setItem(
+      "hyy_admin_session",
+      JSON.stringify(session)
+    );
+
+
+    document.getElementById(
+      "loginPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "adminPage"
+    ).style.display = "block";
+
+
+    await loadEverything();
+
+
+  } catch (err) {
+
+    error.innerText =
+      err.message;
+
+    error.style.display =
+      "block";
+
+  }
+
+}
+
+
+/* =====================================================
+   AUTO LOGIN
+===================================================== */
+
+window.addEventListener(
+  "load",
+  async function() {
+
+    const saved =
+      localStorage.getItem(
+        "hyy_admin_session"
+      );
+
+
+    if (!saved) return;
+
+
+    try {
+
+      session =
+        JSON.parse(saved);
+
+
+      const admin =
+        await supabaseRequest(
+          `/rest/v1/admin_users?user_id=eq.${session.user.id}&select=user_id`
+        );
+
+
+      if (
+        !admin ||
+        admin.length === 0
+      ) {
+
+        logout();
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "loginPage"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "adminPage"
+      ).style.display = "block";
+
+
+      await loadEverything();
+
+
+    } catch (err) {
+
+      logout();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+  session = null;
+
+  localStorage.removeItem(
+    "hyy_admin_session"
+  );
+
+
+  document.getElementById(
+    "adminPage"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "loginPage"
+  ).style.display = "flex";
+
+
+  document.getElementById(
+    "password"
+  ).value = "";
+
+}
+
+
+/* =====================================================
+   LOAD EVERYTHING
+===================================================== */
+
+async function loadEverything() {
+
+  try {
+
+    await Promise.all([
+
+      loadStock(),
+
+      loadOrders(),
+
+      loadHistory()
+
+    ]);
+
+  } catch (err) {
+
+    alert(
+      "Could not load admin data:\n\n" +
+      err.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD STOCK
+===================================================== */
+
+async function loadStock() {
+
+  const stock =
+    await supabaseRequest(
+      "/rest/v1/stock?select=*&order=id.asc"
+    );
+
+
+  const container =
+    document.getElementById(
+      "stockContainer"
+    );
+
+
+  container.innerHTML = "";
+
+
+  document.getElementById(
+    "totalProducts"
+  ).innerText =
+    stock.length;
+
+
+  let low = 0;
+
+
+  stock.forEach(product => {
+
+    if (product.quantity <= 5) {
+
+      low++;
+
+    }
+
+
+    const lowClass =
+      product.quantity <= 5
+        ? "low-stock"
+        : "";
+
+
+    container.innerHTML += `
+
+      <div class="stock-card">
+
+        <h3>
+          ${escapeHtml(product.product)}
+        </h3>
+
+        <div class="stock-number ${lowClass}">
+          ${product.quantity}
+        </div>
+
+        <div class="stock-actions">
+
+          <button
+            class="add-btn"
+            onclick="openStockModal(
+              ${product.id},
+              '${escapeJs(product.product)}',
+              1
+            )"
+          >
+            + Add
+          </button>
+
+          <button
+            class="draw-btn"
+            onclick="openStockModal(
+              ${product.id},
+              '${escapeJs(product.product)}',
+              -1
+            )"
+          >
+            − Draw
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById(
+    "lowStock"
+  ).innerText = low;
+
+}
+
+
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
+
+async function loadOrders() {
+
+  const orders =
+    await supabaseRequest(
+      "/rest/v1/orders?select=*&order=created_at.desc"
+    );
+
+
+  document.getElementById(
+    "totalOrders"
+  ).innerText =
+    orders.length;
+
+
+  const newCount =
+    orders.filter(
+      order =>
+        String(order.status).toLowerCase() ===
+        "new"
+    ).length;
+
+
+  document.getElementById(
+    "newOrders"
+  ).innerText =
+    newCount;
+
+
+  const table =
+    document.getElementById(
+      "ordersTable"
+    );
+
+
+  table.innerHTML = "";
+
+
+  orders.forEach(order => {
+
+    const status =
+      order.status || "New";
+
+
+    let items =
+      order.items || "";
+
+
+    /*
+      Try to display structured
+      items nicely if available.
+    */
+
+    if (order.items_json) {
+
+      try {
+
+        const parsed =
+          typeof order.items_json === "string"
+            ? JSON.parse(order.items_json)
+            : order.items_json;
+
+
+        if (Array.isArray(parsed)) {
+
+          items =
+            parsed.map(item =>
+              `${item.qty} × ${item.name}` +
+              (item.color
+                ? ` (${item.color})`
+                : "")
+            ).join("<br>");
+
+        }
+
+      } catch (e) {}
+
+    }
+
+
+    table.innerHTML += `
+
+      <tr>
+
+        <td>
+          #${order.id}
+        </td>
+
+        <td>
+          ${escapeHtml(order.name || "")}
+        </td>
+
+        <td>
+          ${escapeHtml(order.phone || "")}
+        </td>
+
+        <td>
+          ${escapeHtml(order.address || "")}
+        </td>
+
+        <td>
+          ${items}
+        </td>
+
+        <td>
+          ${escapeHtml(order.total || "")}
+        </td>
+
+        <td>
+
+          <span class="status ${getStatusClass(status)}">
+
+            ${escapeHtml(status)}
+
+          </span>
+
+        </td>
+
+        <td>
+          ${formatDate(order.created_at)}
+        </td>
+
+        <td>
+
+          <div class="order-actions">
+
+            ${
+              status !== "Confirmed" &&
+              status !== "Delivered" &&
+              status !== "Cancelled"
+
+              ? `
+
+                <button
+                  class="confirm-btn"
+                  onclick="changeOrderStatus(
+                    ${order.id},
+                    'Confirmed'
+                  )"
+                >
+                  Confirm
+                </button>
+
+              `
+              : ""
+            }
+
+
+            ${
+              status !== "Cancelled"
+
+              ? `
+
+                <button
+                  class="cancel-btn"
+                  onclick="cancelOrder(
+                    ${order.id}
+                  )"
+                >
+                  Cancel
+                </button>
+
+              `
+              : ""
+            }
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+}
+
+
+/* =====================================================
+   CHANGE ORDER STATUS
+===================================================== */
+
+async function changeOrderStatus(
+  orderId,
+  newStatus
+) {
+
+  if (
+    !confirm(
+      `Change order #${orderId} to ${newStatus}?`
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await supabaseRequest(
+      `/rest/v1/orders?id=eq.${orderId}`,
+      {
+
+        method: "PATCH",
+
+        headers: {
+
+          "Prefer":
+            "return=minimal"
+
+        },
+
+        body: JSON.stringify({
+
+          status: newStatus
+
+        })
+
+      }
+    );
+
+
+    await loadEverything();
+
+
+  } catch (err) {
+
+    alert(
+      "Failed to update order:\n\n" +
+      err.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CANCEL ORDER
+===================================================== */
+
+async function cancelOrder(
+  orderId
+) {
+
+  if (
+    !confirm(
+      `Cancel order #${orderId}?\n\nStock will be returned automatically.`
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await changeOrderStatus(
+      orderId,
+      "Cancelled"
+    );
+
+  } catch (err) {
+
+    alert(err.message);
+
+  }
+
+}
+
+
+/* =====================================================
+   OPEN STOCK MODAL
+===================================================== */
+
+function openStockModal(
+  productId,
+  productName,
+  direction
+) {
+
+  currentProductId =
+    productId;
+
+  currentAdjustment =
+    direction;
+
+
+  document.getElementById(
+    "modalProduct"
+  ).innerText =
+    productName;
+
+
+  document.getElementById(
+    "modalTitle"
+  ).innerText =
+    direction === 1
+      ? "Add Stock"
+      : "Draw Stock";
+
+
+  document.getElementById(
+    "stockAmount"
+  ).value = "";
+
+
+  document.getElementById(
+    "stockReason"
+  ).value = "";
+
+
+  document.getElementById(
+    "stockModal"
+  ).style.display =
+    "flex";
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+  document.getElementById(
+    "stockModal"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   SAVE STOCK
+===================================================== */
+
+async function saveStock() {
+
+  const amount =
+    parseInt(
+      document.getElementById(
+        "stockAmount"
+      ).value
+    );
+
+
+  const reason =
+    document.getElementById(
+      "stockReason"
+    ).value.trim();
+
+
+  if (
+    !amount ||
+    amount <= 0
+  ) {
+
+    alert(
+      "Enter a valid quantity."
+    );
+
+    return;
+
+  }
+
+
+  const finalReason =
+    reason ||
+    (
+      currentAdjustment === 1
+        ? "Manual Stock Added"
+        : "Manual Stock Draw"
+    );
+
+
+  try {
+
+    await supabaseRequest(
+      "/rest/v1/rpc/adjust_stock",
+      {
+
+        method: "POST",
+
+        body: JSON.stringify({
+
+          p_product_id:
+            currentProductId,
+
+          p_quantity:
+            amount *
+            currentAdjustment,
+
+          p_reason:
+            finalReason
+
+        })
+
+      }
+    );
+
+
+    closeModal();
+
+    await loadEverything();
+
+
+    alert(
+      "Stock updated successfully."
+    );
+
+
+  } catch (err) {
+
+    alert(
+      "Stock update failed:\n\n" +
+      err.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD HISTORY
+===================================================== */
+
+async function loadHistory() {
+
+  const history =
+    await supabaseRequest(
+      "/rest/v1/inventory_transactions?select=*,stock(product)&order=created_at.desc"
+    );
+
+
+  const table =
+    document.getElementById(
+      "historyTable"
+    );
+
+
+  table.innerHTML = "";
+
+
+  history.forEach(item => {
+
+    const product =
+      item.stock
+        ? item.stock.product
+        : "Unknown";
+
+
+    const change =
+      item.quantity_change;
+
+
+    table.innerHTML += `
+
+      <tr>
+
+        <td>
+          ${escapeHtml(product)}
+        </td>
+
+        <td>
+          <strong>
+            ${change > 0 ? "+" : ""}${change}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(item.reason || "")}
+        </td>
+
+        <td>
+          ${
+            item.order_id
+              ? "#" + item.order_id
+              : "-"
           }
-        }
-      );
+        </td>
+
+        <td>
+          ${formatDate(item.created_at)}
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+}
 
 
-      if (!res.ok) {
+/* =====================================================
+   STATUS CLASS
+===================================================== */
 
-        alert("Failed to delete product");
+function getStatusClass(status) {
 
-        return;
-      }
-
-
-      alert("Product deleted successfully!");
-
-      loadStock();
-    }
+  const value =
+    String(status)
+      .toLowerCase();
 
 
-    // AUTO LOGIN
-    if (localStorage.getItem("adminLoggedIn") === "true") {
+  if (value === "confirmed")
+    return "status-confirmed";
 
-      showAdmin();
-    }
 
-  </script>
+  if (value === "delivered")
+    return "status-delivered";
+
+
+  if (value === "cancelled")
+    return "status-cancelled";
+
+
+  return "status-new";
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(date) {
+
+  if (!date)
+    return "-";
+
+
+  return new Date(date)
+    .toLocaleString();
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeJs(value) {
+
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+
+}
+
+</script>
 
 </body>
 </html>
-```
