@@ -327,64 +327,110 @@ const SUPABASE_KEY = "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";    let ca
     }
 
     async function sendOrder() {
-      if (cart.length === 0) {
-        alert("Your cart is empty");
-        return;
-      }
+  if (cart.length === 0) {
+    alert("Your cart is empty");
+    return;
+  }
 
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const address = document.getElementById("address").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
 
-      if (!name || !phone || !address) {
-        alert("Please fill all fields");
-        return;
-      }
+  if (!name || !phone || !address) {
+    alert("Please fill all fields");
+    return;
+  }
 
-      const orderDetails = cart.map(i => `${i.qty} x ${i.name} | Color: ${i.color}`).join("\\n");
+  // Readable order information
+  const orderDetails = cart
+    .map(i => `${i.qty} x ${i.name} | Color: ${i.color}`)
+    .join("\n");
 
-      try {
-        const db = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+  // Calculate order total
+  const total = cart.reduce(
+    (sum, item) => sum + (item.price * item.qty),
+    0
+  );
+
+  // Structured information used by Supabase
+  // for automatic stock deduction
+  const itemsJson = cart.map(i => ({
+    name: i.name,
+    qty: i.qty,
+    color: i.color,
+    price: i.price
+  }));
+
+  try {
+
+    const db = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Prefer": "return=minimal"
+      },
+
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        address: address,
+        items: orderDetails,
+        items_json: itemsJson,
+        total: `$${total.toFixed(2)}`,
+        status: "New"
+      })
+    });
+
+    if (!db.ok) {
+      throw new Error(await db.text());
+    }
+
+    // Send order to Telegram
+    try {
+
+      await fetch(
+        `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+        {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
+            "apikey": SUPABASE_KEY
           },
+
           body: JSON.stringify({
-            name, phone, address, items: orderDetails, status: "New"
+            name: name,
+            phone: phone,
+            address: address,
+            items: orderDetails,
+            total: `$${total.toFixed(2)}`,
+            status: "New"
           })
-        });
-
-        if (!db.ok) throw new Error(await db.text());
-
-        try {
-          await fetch(`${SUPABASE_URL}/functions/v1/send-order-telegram`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY
-            },
-            body: JSON.stringify({
-              name, phone, address, items: orderDetails, status: "New"
-            })
-          });
-        } catch(e) {
-          console.log("Telegram skipped");
         }
+      );
 
-        alert("Order sent successfully! 🎉");
-        cart = [];
-        renderCart();
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-        document.getElementById("address").value = "";
-
-      } catch(err) {
-        alert("Order failed: " + err.message);
-      }
+    } catch (e) {
+      console.log("Telegram skipped");
     }
-  </script>
+
+    alert("Order sent successfully! 🎉");
+
+    // Clear cart
+    cart = [];
+    renderCart();
+
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
+
+  } catch (err) {
+
+    alert("Order failed: " + err.message);
+
+  }
+}  </script>
 
 </body>
 </html>
