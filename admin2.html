@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HYY Admin</title>
+  <style>
+    body{background:#111;color:#fff;font-family:Arial;padding:20px}
+    .box{background:#222;padding:20px;border-radius:12px;max-width:700px;margin:auto}
+    input,button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px}
+    button{background:#fff;color:#000;font-weight:bold;cursor:pointer}
+  </style>
+</head>
+<body>
+
+<div class="box" id="loginBox">
+  <h2>HYY ADMIN</h2>
+  <input type="password" id="pw" placeholder="Password">
+  <button id="btn">LOG IN</button>
+  <p id="result"></p>
+</div>
+
+<div class="box" id="panel" style="display:none">
+  <h2>✅ ADMIN WORKING</h2>
+  <p>Login successful.</p>
+</div>
+
+<script>
+document.getElementById('btn').onclick = function(){
+  const value = document.getElementById('pw').value;
+
+  if(value === '123456'){
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+  } else {
+    document.getElementById('result').innerText = 'Wrong password';
+  }
+}
+</script>
+
+</body>
+</html>
