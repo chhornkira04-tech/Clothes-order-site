@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,385 +7,948 @@
   <title>HYY Clothing</title>
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-
-    body{background:#f5f5f5;color:#111;}
-
-    header{
-      height:100vh;
-      background:url("quiet-shift.jpg") center/cover no-repeat;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      position:relative;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    header::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.35);
+    body {
+      background: #f5f5f5;
+      color: #111;
     }
 
-    .hero{position:relative;z-index:2;color:white;}
-
-    .hero h1{font-size:3.5rem;margin-bottom:15px;}
-    .hero p{font-size:1.2rem;margin-bottom:25px;}
-
-    .btn{
-      background:black;
-      color:white;
-      border:none;
-      padding:14px 28px;
-      border-radius:30px;
-      cursor:pointer;
-      font-size:1rem;
+    header {
+      height: 100vh;
+      background: url("quiet-shift.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
     }
 
-    .btn:hover{background:#333;}
-
-    section{max-width:1200px;margin:auto;padding:70px 20px;}
-
-    .section-title{
-      text-align:center;
-      font-size:2rem;
-      margin-bottom:40px;
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
     }
 
-    .products{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:25px;
+    .hero {
+      position: relative;
+      z-index: 2;
+      color: white;
     }
 
-    .card{
-      background:white;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 6px 20px rgba(0,0,0,.08);
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
     }
 
-    .card img{width:100%;height:320px;object-fit:cover;}
-
-    .card-body{padding:18px;}
-
-    .price{font-weight:bold;margin:10px 0;}
-
-    select,input,textarea{
-      width:100%;
-      padding:12px;
-      margin-top:12px;
-      border:1px solid #ddd;
-      border-radius:10px;
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
     }
 
-    .qty{display:flex;align-items:center;gap:10px;margin:12px 0;}
-
-    .qty button{
-      width:30px;height:30px;border:none;border-radius:50%;
-      background:black;color:white;cursor:pointer;
+    .btn {
+      background: black;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
     }
 
-    .cart{
-      background:white;
-      margin-top:50px;
-      padding:25px;
-      border-radius:20px;
-      box-shadow:0 6px 20px rgba(0,0,0,.08);
+    .btn:hover {
+      background: #333;
     }
 
-    .cart-item{
-      display:flex;
-      justify-content:space-between;
-      padding-bottom:10px;
-      margin-bottom:10px;
-      border-bottom:1px solid #eee;
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 70px 20px;
     }
 
-    footer{
-      background:black;
-      color:white;
-      text-align:center;
-      padding:30px 20px;
-      margin-top:60px;
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
     }
 
-    footer a{color:#d9c1a5;text-decoration:none;}
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
 
-    @media(max-width:768px){
-      .hero h1{font-size:2.5rem;}
+    .card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .price {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .qty button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+
+    .cart {
+      background: white;
+      margin-top: 50px;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    footer {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+
+    footer p {
+      margin: 8px 0;
+    }
+
+    footer a {
+      color: #d9c1a5;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- HERO -->
   <header>
     <div class="hero">
       <h1>HYY Clothing</h1>
       <p>Wear Your Style • Modern Streetwear</p>
-      <a href="#shop"><button class="btn">Shop Now</button></a>
+      <a href="#shop">
+        <button class="btn">Shop Now</button>
+      </a>
     </div>
   </header>
 
+
+  <!-- SHOP -->
   <section id="shop">
+
     <h2 class="section-title">New Collection</h2>
 
     <div class="products">
 
-      <!-- Zip Polo Sweater -->
+      <!-- ZIP POLO SWEATER -->
       <div class="card">
-<img src="IMG_5448.JPG" alt="Zip Polo Sweater">
+        <img src="IMG_5448.JPG" alt="Zip Polo Sweater">
+
         <div class="card-body">
           <h3>Zip Polo Sweater</h3>
           <p class="price">$8.50</p>
           <p>Free Size • 55kg–80kg</p>
+
           <select id="color1">
             <option>Black</option>
             <option>White</option>
           </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty1',-1)">-</button>
+            <button onclick="changeQty('qty1', -1)">-</button>
             <span id="qty1">1</span>
-            <button onclick="changeQty('qty1',1)">+</button>
+            <button onclick="changeQty('qty1', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('Zip Polo Sweater',8.5,'color1','qty1')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('Zip Polo Sweater', 8.5, 'color1', 'qty1')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
-      <!-- Jersey -->
+
+      <!-- JERSEY -->
       <div class="card">
-<img src="IMG_1078.JPG" alt="Jersey">        <div class="card-body">
+        <img src="IMG_1078.JPG" alt="Jersey">
+
+        <div class="card-body">
           <h3>Jersey</h3>
           <p class="price">$6.50</p>
           <p>Free Size</p>
-          <select id="color2"><option>Black</option></select>
+
+          <select id="color2">
+            <option>Black</option>
+          </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty2',-1)">-</button>
+            <button onclick="changeQty('qty2', -1)">-</button>
             <span id="qty2">1</span>
-            <button onclick="changeQty('qty2',1)">+</button>
+            <button onclick="changeQty('qty2', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('Jersey',6.5,'color2','qty2')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('Jersey', 6.5, 'color2', 'qty2')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
-      <!-- Hoodie -->
+
+      <!-- HOODIE -->
       <div class="card">
-<img src="IMG_5435.PNG" alt="Hoodie">        <div class="card-body">
+        <img src="IMG_5435.PNG" alt="Hoodie">
+
+        <div class="card-body">
           <h3>Hoodie</h3>
           <p class="price">$10.00</p>
           <p>Free Size</p>
-          <select id="color3"><option>Black</option></select>
+
+          <select id="color3">
+            <option>Black</option>
+          </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty3',-1)">-</button>
+            <button onclick="changeQty('qty3', -1)">-</button>
             <span id="qty3">1</span>
-            <button onclick="changeQty('qty3',1)">+</button>
+            <button onclick="changeQty('qty3', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('Hoodie',10,'color3','qty3')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('Hoodie', 10, 'color3', 'qty3')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
-      <!-- T-Shirt -->
+
+      <!-- T-SHIRT -->
       <div class="card">
-<img src="IMG_1683.JPG" alt="T-Shirt">        <div class="card-body">
+        <img src="IMG_1683.JPG" alt="T-Shirt">
+
+        <div class="card-body">
           <h3>T-Shirt</h3>
           <p class="price">$5.00</p>
           <p>Free Size</p>
+
           <select id="color4">
             <option>Black</option>
             <option>Gray</option>
           </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty4',-1)">-</button>
+            <button onclick="changeQty('qty4', -1)">-</button>
             <span id="qty4">1</span>
-            <button onclick="changeQty('qty4',1)">+</button>
+            <button onclick="changeQty('qty4', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('T-Shirt',5,'color4','qty4')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('T-Shirt', 5, 'color4', 'qty4')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
-      <!-- Sweatpants -->
+
+      <!-- SWEATPANTS -->
       <div class="card">
-<img src="IMG_5440.PNG" alt="Sweatpants">        <div class="card-body">
+        <img src="IMG_5440.PNG" alt="Sweatpants">
+
+        <div class="card-body">
           <h3>Sweatpants</h3>
           <p class="price">$10.00</p>
           <p>Free Size</p>
+
           <select id="color5">
             <option>Black</option>
             <option>Gray</option>
           </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty5',-1)">-</button>
+            <button onclick="changeQty('qty5', -1)">-</button>
             <span id="qty5">1</span>
-            <button onclick="changeQty('qty5',1)">+</button>
+            <button onclick="changeQty('qty5', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('Sweatpants',10,'color5','qty5')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('Sweatpants', 10, 'color5', 'qty5')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
-      <!-- Baggy Sweatpants -->
+
+      <!-- BAGGY SWEATPANTS -->
       <div class="card">
-<img src="IMG_5443.PNG" alt="Baggy Sweatpants">        <div class="card-body">
+        <img src="IMG_5443.PNG" alt="Baggy Sweatpants">
+
+        <div class="card-body">
           <h3>Baggy Sweatpants</h3>
           <p class="price">$5.00</p>
           <p>Free Size</p>
-          <select id="color6"><option>Black</option></select>
+
+          <select id="color6">
+            <option>Black</option>
+          </select>
+
           <div class="qty">
-            <button onclick="changeQty('qty6',-1)">-</button>
+            <button onclick="changeQty('qty6', -1)">-</button>
             <span id="qty6">1</span>
-            <button onclick="changeQty('qty6',1)">+</button>
+            <button onclick="changeQty('qty6', 1)">+</button>
           </div>
-          <button class="btn" onclick="addToCart('Baggy Sweatpants',5,'color6','qty6')">Add to Cart</button>
+
+          <button
+            class="btn"
+            onclick="addToCart('Baggy Sweatpants', 5, 'color6', 'qty6')"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
 
     </div>
 
+
+    <!-- CART -->
     <div class="cart">
+
       <h2>Your Cart</h2>
+
       <div id="cartItems"></div>
+
       <h3 id="cartTotal">Total: $0.00</h3>
 
-      <input type="text" id="name" placeholder="Full Name">
-      <input type="text" id="phone" placeholder="Phone Number">
-      <textarea id="address" placeholder="Delivery Address"></textarea>
+      <input
+        type="text"
+        id="name"
+        placeholder="Full Name"
+      >
 
-      <button class="btn" style="width:100%;margin-top:15px" onclick="sendOrder()">Send Order</button>
+      <input
+        type="text"
+        id="phone"
+        placeholder="Phone Number"
+      >
+
+      <textarea
+        id="address"
+        placeholder="Delivery Address"
+      ></textarea>
+
+      <button
+        class="btn"
+        style="width:100%;margin-top:15px"
+        onclick="sendOrder()"
+      >
+        Send Order
+      </button>
+
     </div>
+
   </section>
 
+
+  <!-- PAYMENT QR MODAL -->
+  <div
+    id="paymentModal"
+    style="
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      z-index:9999;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    "
+  >
+
+    <div
+      style="
+        background:white;
+        width:100%;
+        max-width:420px;
+        border-radius:20px;
+        padding:25px;
+        text-align:center;
+        max-height:90vh;
+        overflow-y:auto;
+      "
+    >
+
+      <h2 style="margin-bottom:10px;">
+        💳 Payment
+      </h2>
+
+      <p style="margin-bottom:15px;">
+        Please scan the QR code to pay for your order.
+      </p>
+
+
+      <!-- YOUR QR IMAGE -->
+      <img
+        src="payment-qr.png"
+        alt="Payment QR Code"
+        style="
+          width:280px;
+          max-width:100%;
+          border-radius:10px;
+          margin:10px auto 20px;
+        "
+      >
+
+
+      <!-- BANK INFORMATION -->
+      <div
+        style="
+          background:#f5f5f5;
+          padding:15px;
+          border-radius:12px;
+          margin-bottom:20px;
+          text-align:left;
+        "
+      >
+
+        <p>
+          <strong>Account Name:</strong>
+          YUTHY HENG
+        </p>
+
+        <p style="margin-top:8px;">
+          <strong>Account Number:</strong>
+          004 722 123
+        </p>
+
+        <p style="margin-top:8px;">
+          <strong>Total:</strong>
+          <span id="paymentTotal">$0.00</span>
+        </p>
+
+      </div>
+
+
+      <p
+        style="
+          font-size:14px;
+          color:#666;
+          margin-bottom:15px;
+        "
+      >
+        After you complete the payment, click the button below.
+      </p>
+
+
+      <button
+        class="btn"
+        style="width:100%;margin-bottom:10px;"
+        onclick="confirmPaymentAndSendOrder()"
+      >
+        I Have Paid — Submit Order
+      </button>
+
+
+      <button
+        onclick="closePaymentModal()"
+        style="
+          width:100%;
+          padding:12px;
+          border:none;
+          background:#eee;
+          border-radius:10px;
+          cursor:pointer;
+        "
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
   <footer>
-  <p>
-    Facebook:
-    <a href="https://www.facebook.com/share/1CwfANtfbS/?mibextid=wwXIfr" target="_blank">
-      HYY Clothing Facebook Page
-    </a>
-  </p>
 
-  <p>
-    TikTok:
-    <a href="www.tiktok.com/@hyy.men.clothing" target="_blank">
-      @HYY
-    </a>
-  </p>
+    <p>
+      Facebook:
+      <a
+        href="https://www.facebook.com/share/1CwfANtfbS/?mibextid=wwXIfr"
+        target="_blank"
+      >
+        HYY Clothing Facebook Page
+      </a>
+    </p>
 
-  <p>
-    Telegram Support:
-    <a href="https://t.me/HYYClothing_bot" target="_blank">
-      @HYYClothing_bot
-    </a>
-  </p>
-</footer>
+    <p>
+      TikTok:
+      <a
+        href="https://www.tiktok.com/@hyy.men.clothing"
+        target="_blank"
+      >
+        @HYY
+      </a>
+    </p>
+
+    <p>
+      Telegram Support:
+      <a
+        href="https://t.me/HYYClothing_bot"
+        target="_blank"
+      >
+        @HYYClothing_bot
+      </a>
+    </p>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
   <script>
-const SUPABASE_URL = "https://hfoebqodkfnbqksxnfmp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";    let cart = [];
 
+    const SUPABASE_URL =
+      "https://hfoebqodkfnbqksxnfmp.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";
+
+    let cart = [];
+
+
+    // CHANGE QUANTITY
     function changeQty(id, change) {
-      let el = document.getElementById(id);
-      let value = parseInt(el.innerText) + change;
-      if (value < 1) value = 1;
+
+      const el = document.getElementById(id);
+
+      let value =
+        parseInt(el.innerText) + change;
+
+      if (value < 1) {
+        value = 1;
+      }
+
       el.innerText = value;
     }
 
+
+    // ADD PRODUCT TO CART
     function addToCart(name, price, colorId, qtyId) {
-      const color = document.getElementById(colorId).value;
-      const qty = parseInt(document.getElementById(qtyId).innerText);
-      cart.push({ name, price, color, qty });
+
+      const color =
+        document.getElementById(colorId).value;
+
+      const qty =
+        parseInt(
+          document.getElementById(qtyId).innerText
+        );
+
+      cart.push({
+        name: name,
+        price: price,
+        color: color,
+        qty: qty
+      });
+
       renderCart();
+
+      alert(`${name} added to cart!`);
     }
 
+
+    // DISPLAY CART
     function renderCart() {
-      const container = document.getElementById("cartItems");
+
+      const container =
+        document.getElementById("cartItems");
+
       container.innerHTML = "";
+
       let total = 0;
 
+
       cart.forEach((item, index) => {
-        total += item.price * item.qty;
+
+        total +=
+          item.price * item.qty;
+
+
         container.innerHTML += `
+
           <div class="cart-item">
+
             <div>
-              <strong>${item.name}</strong><br>
-              Color: ${item.color} × ${item.qty}
+
+              <strong>
+                ${item.name}
+              </strong>
+
+              <br>
+
+              Color:
+              ${item.color}
+              ×
+              ${item.qty}
+
             </div>
+
+
             <div style="text-align:right">
-              <div>$${(item.price * item.qty).toFixed(2)}</div>
-              <button onclick="removeFromCart(${index})"
-                style="background:red;color:white;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;margin-top:5px;">
+
+              <div>
+                $${(
+                  item.price * item.qty
+                ).toFixed(2)}
+              </div>
+
+
+              <button
+                onclick="removeFromCart(${index})"
+                style="
+                  background:red;
+                  color:white;
+                  border:none;
+                  padding:5px 10px;
+                  border-radius:6px;
+                  cursor:pointer;
+                  margin-top:5px;
+                "
+              >
                 Remove
               </button>
+
             </div>
+
           </div>
+
         `;
       });
 
-      document.getElementById("cartTotal").innerText = `Total: $${total.toFixed(2)}`;
+
+      document.getElementById("cartTotal").innerText =
+        `Total: $${total.toFixed(2)}`;
     }
 
+
+    // REMOVE PRODUCT
     function removeFromCart(index) {
+
       cart.splice(index, 1);
+
       renderCart();
     }
 
+
+    // OPEN PAYMENT WINDOW
     async function sendOrder() {
+
       if (cart.length === 0) {
+
         alert("Your cart is empty");
+
         return;
       }
 
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const address = document.getElementById("address").value.trim();
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const phone =
+        document.getElementById("phone").value.trim();
+
+      const address =
+        document.getElementById("address").value.trim();
+
 
       if (!name || !phone || !address) {
+
         alert("Please fill all fields");
+
         return;
       }
 
-      const orderDetails = cart.map(i => `${i.qty} x ${i.name} | Color: ${i.color}`).join("\\n");
+
+      const total =
+        cart.reduce(
+          (sum, item) =>
+            sum + (item.price * item.qty),
+          0
+        );
+
+
+      document.getElementById("paymentTotal").innerText =
+        `$${total.toFixed(2)}`;
+
+
+      document.getElementById("paymentModal").style.display =
+        "flex";
+    }
+
+
+    // CLOSE PAYMENT WINDOW
+    function closePaymentModal() {
+
+      document.getElementById("paymentModal").style.display =
+        "none";
+    }
+
+
+    // CONFIRM PAYMENT AND SUBMIT ORDER
+    async function confirmPaymentAndSendOrder() {
+
+      if (cart.length === 0) {
+
+        alert("Your cart is empty");
+
+        closePaymentModal();
+
+        return;
+      }
+
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const phone =
+        document.getElementById("phone").value.trim();
+
+      const address =
+        document.getElementById("address").value.trim();
+
+
+      if (!name || !phone || !address) {
+
+        alert("Please fill all fields");
+
+        closePaymentModal();
+
+        return;
+      }
+
+
+      const orderDetails =
+        cart
+          .map(
+            item =>
+              `${item.qty} x ${item.name} | Color: ${item.color}`
+          )
+          .join("\n");
+
+
+      const total =
+        cart.reduce(
+          (sum, item) =>
+            sum + (item.price * item.qty),
+          0
+        );
+
+
+      const itemsJson =
+        cart.map(item => ({
+          name: item.name,
+          qty: item.qty,
+          color: item.color,
+          price: item.price
+        }));
+
 
       try {
-        const db = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({
-            name, phone, address, items: orderDetails, status: "New"
-          })
-        });
 
-        if (!db.ok) throw new Error(await db.text());
+        // SAVE ORDER TO SUPABASE
+        const db =
+          await fetch(
+            `${SUPABASE_URL}/rest/v1/orders`,
+            {
+              method: "POST",
 
-        try {
-          await fetch(`${SUPABASE_URL}/functions/v1/send-order-telegram`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY
-            },
-            body: JSON.stringify({
-              name, phone, address, items: orderDetails, status: "New"
-            })
-          });
-        } catch(e) {
-          console.log("Telegram skipped");
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY,
+                "Prefer": "return=minimal"
+              },
+
+              body: JSON.stringify({
+
+                name: name,
+
+                phone: phone,
+
+                address: address,
+
+                items: orderDetails,
+
+                items_json: itemsJson,
+
+                total:
+                  `$${total.toFixed(2)}`,
+
+                status: "New"
+
+              })
+            }
+          );
+
+
+        if (!db.ok) {
+
+          throw new Error(
+            await db.text()
+          );
         }
 
-        alert("Order sent successfully! 🎉");
+
+        // SEND ORDER TO TELEGRAM
+        try {
+
+          const telegramResponse =
+            await fetch(
+              `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type": "application/json",
+                  "apikey": SUPABASE_KEY
+                },
+
+                body: JSON.stringify({
+
+                  name: name,
+
+                  phone: phone,
+
+                  address: address,
+
+                  items: orderDetails,
+
+                  total:
+                    `$${total.toFixed(2)}`,
+
+                  status: "New"
+
+                })
+              }
+            );
+
+
+          if (!telegramResponse.ok) {
+
+            console.log(
+              "Telegram error:",
+              await telegramResponse.text()
+            );
+
+          }
+
+        } catch (telegramError) {
+
+          console.log(
+            "Telegram error:",
+            telegramError
+          );
+
+        }
+
+
+        // CLOSE PAYMENT WINDOW
+        closePaymentModal();
+
+
+        // SUCCESS MESSAGE
+        alert(
+          "Payment confirmed and order sent successfully! 🎉"
+        );
+
+
+        // CLEAR CART
         cart = [];
+
         renderCart();
+
+
+        // CLEAR CUSTOMER INFORMATION
         document.getElementById("name").value = "";
+
         document.getElementById("phone").value = "";
+
         document.getElementById("address").value = "";
 
-      } catch(err) {
-        alert("Order failed: " + err.message);
+
+      } catch (err) {
+
+        alert(
+          "Order failed: " + err.message
+        );
+
       }
+
     }
+
   </script>
 
 </body>
 </html>
+```
