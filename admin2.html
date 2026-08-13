@@ -54,24 +54,170 @@
   <p id="msg" style="color:#ff8080;"></p>
 </div>
 
-<div class="box" id="successBox" style="display:none;">
-  <h1 style="color:lime;">✅ ADMIN WORKING</h1>
-  <p>Login successful!</p>
+<div id="panel" style="display:none">
+
+  <div class="box">
+    <h1>HYY Clothing Admin</h1>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="grid">
+
+    <div class="box">
+      <h2>📦 Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>📊 Stock Management</h2>
+
+      <select id="stockProduct">
+        <option>Zip Polo Sweater</option>
+        <option>Jersey</option>
+        <option>Hoodie</option>
+        <option>T-Shirt</option>
+        <option>Sweatpants</option>
+        <option>Baggy Sweatpants</option>
+      </select>
+
+      <input type="number" id="stockQty" placeholder="Add Quantity">
+
+      <button onclick="addStock()">➕ Add Stock</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody id="stockBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  document.getElementById('loginForm').onsubmit = function(e){
-    e.preventDefault();
+const PASSWORD = "123456";
 
-    const password = document.getElementById('pw').value;
+const supabase = window.supabase.createClient(
+  "https://hfoebqodkfnbqksxnfmp.supabase.co",
+  "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH"
+);
 
-    if(password === '123456'){
-      document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('successBox').style.display = 'block';
-    }else{
-      document.getElementById('msg').textContent = '❌ Wrong password';
-    }
-  };
+function login(){
+  const value = document.getElementById('pw').value;
+
+  if(value === PASSWORD){
+    localStorage.setItem('hyy-admin','true');
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('panel').style.display='block';
+    loadOrders();
+    loadStock();
+  }else{
+    document.getElementById('msg').innerText='Wrong password';
+  }
+}
+
+if(localStorage.getItem('hyy-admin')==='true'){
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('panel').style.display='block';
+  loadOrders();
+  loadStock();
+}
+
+function logout(){
+  localStorage.removeItem('hyy-admin');
+  location.reload();
+}
+
+async function loadOrders(){
+  const { data } = await supabase
+    .from('orders')
+    .select('*')
+    .order('created_at',{ascending:false});
+
+  const body = document.getElementById('ordersBody');
+  body.innerHTML='';
+
+  data.forEach(order=>{
+    body.innerHTML += `
+      <tr>
+        <td>
+          <b>${order.name || ''}</b><br>
+          📞 ${order.phone || ''}<br>
+          📍 ${order.address || ''}
+        </td>
+        <td>${order.items || ''}</td>
+        <td>
+          <select onchange="updateStatus(${order.id}, this.value)">
+            <option ${order.status==='New'?'selected':''}>New</option>
+            <option ${order.status==='Packing'?'selected':''}>Packing</option>
+            <option ${order.status==='Shipped'?'selected':''}>Shipped</option>
+            <option ${order.status==='Completed'?'selected':''}>Completed</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function updateStatus(id,status){
+  await supabase.from('orders').update({status}).eq('id',id);
+  loadOrders();
+}
+
+async function loadStock(){
+  const { data } = await supabase
+    .from('stock')
+    .select('*')
+    .order('product');
+
+  const body = document.getElementById('stockBody');
+  body.innerHTML='';
+
+  data.forEach(item=>{
+    body.innerHTML += `
+      <tr>
+        <td>${item.product}</td>
+        <td>${item.quantity}</td>
+      </tr>
+    `;
+  });
+}
+
+async function addStock(){
+  const product = document.getElementById('stockProduct').value;
+  const qty = parseInt(document.getElementById('stockQty').value || 0);
+
+  if(qty <= 0) return;
+
+  const { data } = await supabase
+    .from('stock')
+    .select('*')
+    .eq('product',product)
+    .single();
+
+  await supabase
+    .from('stock')
+    .update({ quantity: data.quantity + qty })
+    .eq('id',data.id);
+
+  document.getElementById('stockQty').value='';
+  loadStock();
+}
 </script>
 
 </body>
