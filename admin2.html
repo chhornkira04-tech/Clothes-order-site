@@ -2,37 +2,38 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>HYY Admin Test</title>
+  <title>HYY ADMIN TEST</title>
 </head>
 <body style="background:#111;color:white;font-family:Arial;text-align:center;padding-top:100px;">
 
   <h1>HYY ADMIN TEST</h1>
 
-  <input id="pw" type="password" placeholder="Password" style="padding:10px;width:250px;">
+  <input id="pw" type="password" placeholder="Password"
+         style="padding:12px;width:260px;font-size:16px;">
 
   <br><br>
 
-  <button onclick="testLogin()" style="padding:10px 20px;font-weight:bold;">
+  <button
+    style="padding:12px 24px;font-size:16px;font-weight:bold;cursor:pointer;"
+    onclick="
+      if(document.getElementById('pw').value==='123456'){
+        document.getElementById('success').style.display='block';
+        document.getElementById('login').style.display='none';
+      }else{
+        document.getElementById('msg').innerHTML='❌ Wrong password';
+      }
+    ">
     LOG IN
   </button>
 
-  <p id="msg"></p>
+  <p id="msg" style="color:#ff8080;"></p>
 
-  <script>
-    function testLogin(){
-      const value = document.getElementById('pw').value;
+  <div id="login"></div>
 
-      if(value === '123456'){
-        document.body.innerHTML = '
-          <h1 style="color:lime;text-align:center;margin-top:100px;">
-            ✅ ADMIN WORKING
-          </h1>
-        ';
-      }else{
-        document.getElementById('msg').innerText = 'Wrong password';
-      }
-    }
-  </script>
+  <div id="success" style="display:none;margin-top:40px;">
+    <h1 style="color:lime;">✅ ADMIN WORKING</h1>
+    <p>Login successful!</p>
+  </div>
 
 </body>
 </html>
