@@ -5,41 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HYY Admin</title>
   <style>
-    body{
-      font-family:Arial,sans-serif;
-      background:#111;
-      color:white;
-      padding:20px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      padding: 20px;
     }
-    .box{
-      background:#1c1c1c;
-      padding:20px;
-      border-radius:12px;
-      max-width:900px;
-      margin:auto;
+    .box {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
     }
-    input,button{
-      width:100%;
-      padding:10px;
-      margin:8px 0;
-      border:none;
-      border-radius:8px;
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
     }
-    button{
-      background:white;
-      color:black;
-      font-weight:bold;
-      cursor:pointer;
+    button {
+      background: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:15px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
-    th,td{
-      border:1px solid #333;
-      padding:8px;
-      text-align:left;
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
     }
   </style>
 </head>
@@ -47,22 +46,19 @@
 
 <div class="box" id="loginBox">
   <h2>HYY Admin Login</h2>
-  <input type="password" id="password" placeholder="Enter Admin Password">
-  <button id="loginBtn">Log In</button>
+  <input type="password" id="password" placeholder="Enter password">
+  <button onclick="login()">Log In</button>
   <p id="msg"></p>
 </div>
 
-<div class="box" id="panel" style="display:none">
-  <h2>HYY Orders</h2>
-  <button id="logoutBtn">Logout</button>
-
+<div class="box" id="panel" style="display:none;">
+  <h2>Orders</h2>
   <table>
     <thead>
       <tr>
         <th>Customer</th>
         <th>Phone</th>
         <th>Items</th>
-        <th>Status</th>
       </tr>
     </thead>
     <tbody id="orders"></tbody>
@@ -71,38 +67,32 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const ADMIN_PASSWORD = "HYYADMIN2026";
+const PASSWORD = "123456";
 
 const supabase = window.supabase.createClient(
   "https://hfoebqodkfnbqksxnfmp.supabase.co",
   "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH"
 );
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
-  const password = document.getElementById("password").value;
+function login() {
+  const p = document.getElementById("password").value;
 
-  if(password !== ADMIN_PASSWORD){
+  if (p === PASSWORD) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+    loadOrders();
+  } else {
     document.getElementById("msg").innerText = "Wrong password";
-    return;
   }
+}
 
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("panel").style.display = "block";
-
-  loadOrders();
-});
-
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  location.reload();
-});
-
-async function loadOrders(){
+async function loadOrders() {
   const { data, error } = await supabase
     .from("orders")
     .select("*")
-    .order("created_at", { ascending:false });
+    .order("created_at", { ascending: false });
 
-  if(error){
+  if (error) {
     alert(error.message);
     return;
   }
@@ -116,7 +106,6 @@ async function loadOrders(){
         <td>${o.name}</td>
         <td>${o.phone}</td>
         <td>${o.items}</td>
-        <td>${o.status}</td>
       </tr>
     `;
   });
