@@ -388,39 +388,33 @@ const SUPABASE_KEY = "sb_publishable_Q70mNsP7b7TFnfh1_Hk1DQ_HdHu9wQH";    let ca
     }
 
     // Send order to Telegram
-    // Send order to Telegram
-    const telegramResponse = await fetch(
-      `${SUPABASE_URL}/functions/v1/send-order-telegram`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`
-        },
-        body: JSON.stringify({
-          name: name,
-          phone: phone,
-          address: address,
-          items: orderDetails,
-          total: `$${total.toFixed(2)}`,
-          status: "New"
-        })
-      }
-    );
+    try {
 
-    const telegramText = await telegramResponse.text();
+      await fetch(
+        `${SUPABASE_URL}/functions/v1/send-order-telegram`,
+        {
+          method: "POST",
 
-    console.log("Telegram response:", telegramResponse.status, telegramText);
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
+          },
 
-    if (!telegramResponse.ok) {
-      throw new Error(
-        "Telegram function error: " +
-        telegramResponse.status +
-        " " +
-        telegramText
+          body: JSON.stringify({
+            name: name,
+            phone: phone,
+            address: address,
+            items: orderDetails,
+            total: `$${total.toFixed(2)}`,
+            status: "New"
+          })
+        }
       );
+
+    } catch (e) {
+      console.log("Telegram skipped");
     }
+
     alert("Order sent successfully! 🎉");
 
     // Clear cart
